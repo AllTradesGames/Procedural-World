@@ -19,18 +19,18 @@ MonoBehaviour:
   m_showSnowSettings: 0
   m_showTextureSettings: 1
   m_showGeoSettings: 0
-  m_showDetailSettings: 0
+  m_showDetailSettings: 1
   m_showColorMapSettings: 0
   m_showOptimisationSettings: 0
   m_ctsDirectory: Assets/CTS/
   m_shaderType: 1
   m_globalUvMixPower: 3
-  m_globalUvMixStartDistance: 400
+  m_globalUvMixStartDistance: 50
   m_globalNormalPower: 0.1
-  m_globalDetailNormalClosePower: 0
-  m_globalDetailNormalCloseTiling: 60
+  m_globalDetailNormalClosePower: 2
+  m_globalDetailNormalCloseTiling: 1
   m_globalDetailNormalFarPower: 0
-  m_globalDetailNormalFarTiling: 300
+  m_globalDetailNormalFarTiling: 119
   m_globalTerrainSmoothness: 1
   m_globalTerrainSpecular: 1
   m_globalTesselationPower: 7
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_snowGlitterTiling: 2.5
   m_geoAlbedoTexture: {fileID: 2800000, guid: a8b026679658e0a458404f9f86468a66, type: 3}
   m_terrainTextures:
-  - m_isOpenInEditor: 0
+  - m_isOpenInEditor: 1
     m_textureIdx: 0
     m_name: QXL_Hills_Forest_Moist_Soil_rmrkivp0_Albedo
     m_detailPower: 1
@@ -124,9 +124,10 @@ MonoBehaviour:
     m_albedoIdx: 0
     m_albedoTilingClose: 2
     m_albedoTilingFar: 3
-    m_albedoAverage: {x: 0.06847818, y: 0.029556833, z: 0.008023192, w: 1}
+    m_albedoAverage: {x: 0.06847818, y: 0.029556833, z: 0.008023192, w: 0.15294118}
     m_albedoTexture: {fileID: 2800000, guid: 3af998a771fe24047a20a090e0d3e448, type: 3}
-    m_smoothnessTexture: {fileID: 0}
+    m_smoothnessTexture: {fileID: 2800000, guid: af898d0b406bf1e41b811e230d8f465b,
+      type: 3}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 0
     m_normalStrength: 1
@@ -159,9 +160,10 @@ MonoBehaviour:
     m_albedoIdx: 1
     m_albedoTilingClose: 5
     m_albedoTilingFar: 3
-    m_albedoAverage: {x: 0.1714411, y: 0.10702311, z: 0.06301003, w: 0.05490196}
+    m_albedoAverage: {x: 0.1714411, y: 0.10702311, z: 0.06301003, w: 0.06666667}
     m_albedoTexture: {fileID: 2800000, guid: 40fced4ad32793b4a9e4d904cd47767f, type: 3}
-    m_smoothnessTexture: {fileID: 0}
+    m_smoothnessTexture: {fileID: 2800000, guid: 71db0ffd73da7b3458f7b7a1f665c179,
+      type: 3}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 1
     m_normalStrength: 1
@@ -194,9 +196,10 @@ MonoBehaviour:
     m_albedoIdx: 2
     m_albedoTilingClose: 5
     m_albedoTilingFar: 3
-    m_albedoAverage: {x: 0.1714411, y: 0.086500466, z: 0.019382361, w: 0.5764706}
+    m_albedoAverage: {x: 0.1714411, y: 0.086500466, z: 0.019382361, w: 0.16862746}
     m_albedoTexture: {fileID: 2800000, guid: a5e2d69ee5f24be49a20b428aa492533, type: 3}
-    m_smoothnessTexture: {fileID: 0}
+    m_smoothnessTexture: {fileID: 2800000, guid: 4ca6e77d9542e5d4ab4d602b47aeeed0,
+      type: 3}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 2
     m_normalStrength: 1
@@ -229,9 +232,10 @@ MonoBehaviour:
     m_albedoIdx: 3
     m_albedoTilingClose: 5
     m_albedoTilingFar: 3
-    m_albedoAverage: {x: 0.15592647, y: 0.09989874, z: 0.048171822, w: 0.043137256}
+    m_albedoAverage: {x: 0.15592647, y: 0.09989874, z: 0.048171822, w: 0.15686275}
     m_albedoTexture: {fileID: 2800000, guid: 5c34ddb782f8d6d4e949d674c4c0d90f, type: 3}
-    m_smoothnessTexture: {fileID: 0}
+    m_smoothnessTexture: {fileID: 2800000, guid: 5b4de4ae0438c4f4ebdfcf7904e27ee0,
+      type: 3}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 3
     m_normalStrength: 1
@@ -251,7 +255,7 @@ MonoBehaviour:
     m_emissionIdx: -1
     m_emissionStrength: 1
     m_emissionTexture: {fileID: 0}
-  - m_isOpenInEditor: 0
+  - m_isOpenInEditor: 1
     m_textureIdx: 4
     m_name: QXL_Hills_Forest_Thick_Poplar_Leaves_sg1omgh_Albedo
     m_detailPower: 1
@@ -264,9 +268,10 @@ MonoBehaviour:
     m_albedoIdx: 4
     m_albedoTilingClose: 5
     m_albedoTilingFar: 3
-    m_albedoAverage: {x: 0.30498737, y: 0.16513222, z: 0.048171822, w: 0.32941177}
+    m_albedoAverage: {x: 0.30498737, y: 0.16513222, z: 0.048171822, w: 0.16470589}
     m_albedoTexture: {fileID: 2800000, guid: ebafd736e9f3d744db15fcf0d7e681b9, type: 3}
-    m_smoothnessTexture: {fileID: 0}
+    m_smoothnessTexture: {fileID: 2800000, guid: 5d328e30e6e5a664195fad6b9b8859d2,
+      type: 3}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 4
     m_normalStrength: 1
