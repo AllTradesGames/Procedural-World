@@ -255,7 +255,7 @@ MonoBehaviour:
     m_emissionIdx: -1
     m_emissionStrength: 1
     m_emissionTexture: {fileID: 0}
-  - m_isOpenInEditor: 1
+  - m_isOpenInEditor: 0
     m_textureIdx: 4
     m_name: QXL_Hills_Forest_Thick_Poplar_Leaves_sg1omgh_Albedo
     m_detailPower: 1
