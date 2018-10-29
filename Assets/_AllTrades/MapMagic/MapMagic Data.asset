@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oldId: 0
   oldCount: 0
-  guiScroll: {x: -438.4472, y: -116.799805}
-  guiZoom: 0.8239746
+  guiScroll: {x: 190.64783, y: -73.583984}
+  guiZoom: 0.46142578
   serializedVersion: 193
   classes:
   - "<MapMagic.Generator[] length=62>\r\n\t<item0 type=MapMagic.Generator link=1/>\r\n\t<item1
@@ -152,7 +152,7 @@ MonoBehaviour:
     type=UnityEngine.Rect x=283.3617 y=-295.7403 width=0 height=0/>\r\n</MapMagic.Generator+Output>\r\n"
   - "<MapMagic.ObjectOutput>\r\n\t<baseLayers type=MapMagic.ObjectOutput+Layer[] link=29/>\r\n\t<selected
     type=System.Int32 value=1/>\r\n\t<biomeBlendType type=MapMagic.ObjectOutput+BiomeBlendType
-    value=1/>\r\n\t<enabled type=System.Boolean value=True/>\r\n\t<mandatory type=System.Boolean
+    value=1/>\r\n\t<enabled type=System.Boolean value=False/>\r\n\t<mandatory type=System.Boolean
     value=False/>\r\n\t<guiRect type=UnityEngine.Rect x=1763.826 y=311.7418 width=160
     height=248/>\r\n</MapMagic.ObjectOutput>\r\n"
   - "<MapMagic.ObjectOutput+Layer[] length=2>\r\n\t<item0 type=MapMagic.ObjectOutput+Layer
@@ -591,7 +591,7 @@ MonoBehaviour:
     type=UnityEngine.Rect x=576.043 y=998.3754 width=18 height=18/>\r\n</MapMagic.Generator+Output>\r\n"
   - "<MapMagic.ObjectOutput>\r\n\t<baseLayers type=MapMagic.ObjectOutput+Layer[] link=144/>\r\n\t<selected
     type=System.Int32 value=4/>\r\n\t<biomeBlendType type=MapMagic.ObjectOutput+BiomeBlendType
-    value=1/>\r\n\t<enabled type=System.Boolean value=True/>\r\n\t<mandatory type=System.Boolean
+    value=1/>\r\n\t<enabled type=System.Boolean value=False/>\r\n\t<mandatory type=System.Boolean
     value=False/>\r\n\t<guiRect type=UnityEngine.Rect x=1032.227 y=1062.371 width=160
     height=326/>\r\n</MapMagic.ObjectOutput>\r\n"
   - "<MapMagic.ObjectOutput+Layer[] length=5>\r\n\t<item0 type=MapMagic.ObjectOutput+Layer
@@ -935,8 +935,8 @@ MonoBehaviour:
     type=UnityEngine.Rect x=655.4948 y=1640.712 width=18 height=18/>\r\n</MapMagic.Generator+Output>\r\n"
   - "<MapMagic.ObjectOutput>\r\n\t<baseLayers type=MapMagic.ObjectOutput+Layer[] link=230/>\r\n\t<selected
     type=System.Int32 value=4/>\r\n\t<biomeBlendType type=MapMagic.ObjectOutput+BiomeBlendType
-    value=1/>\r\n\t<enabled type=System.Boolean value=True/>\r\n\t<mandatory type=System.Boolean
-    value=False/>\r\n\t<guiRect type=UnityEngine.Rect x=849.5583 y=1578.601 width=160
+    value=1/>\r\n\t<enabled type=System.Boolean value=False/>\r\n\t<mandatory type=System.Boolean
+    value=False/>\r\n\t<guiRect type=UnityEngine.Rect x=851.9856 y=1599.233 width=160
     height=326/>\r\n</MapMagic.ObjectOutput>\r\n"
   - "<MapMagic.ObjectOutput+Layer[] length=5>\r\n\t<item0 type=MapMagic.ObjectOutput+Layer
     link=231/>\r\n\t<item1 type=MapMagic.ObjectOutput+Layer link=233/>\r\n\t<item2
@@ -949,7 +949,7 @@ MonoBehaviour:
     type=System.Boolean value=False/>\r\n\t<parentToRoot type=System.Boolean value=False/>\r\n</MapMagic.ObjectOutput+Layer>\r\n"
   - "<MapMagic.Generator+Input>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<link
     type=MapMagic.Generator+Output link=228/>\r\n\t<linkGen type=MapMagic.Generator
-    link=222/>\r\n\t<guiRect type=UnityEngine.Rect x=844.5583 y=1704.601 width=18
+    link=222/>\r\n\t<guiRect type=UnityEngine.Rect x=846.9856 y=1725.233 width=18
     height=18/>\r\n</MapMagic.Generator+Input>\r\n"
   - "<MapMagic.ObjectOutput+Layer>\r\n\t<input type=MapMagic.Generator+Input link=234/>\r\n\t<prefab
     type=UnityEngine.Transform object=19/>\r\n\t<relativeHeight type=System.Boolean
@@ -958,7 +958,7 @@ MonoBehaviour:
     type=System.Boolean value=False/>\r\n\t<parentToRoot type=System.Boolean value=False/>\r\n</MapMagic.ObjectOutput+Layer>\r\n"
   - "<MapMagic.Generator+Input>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<link
     type=MapMagic.Generator+Output link=235/>\r\n\t<linkGen type=MapMagic.Generator
-    link=236/>\r\n\t<guiRect type=UnityEngine.Rect x=844.5583 y=1730.601 width=18
+    link=236/>\r\n\t<guiRect type=UnityEngine.Rect x=846.9856 y=1751.233 width=18
     height=18/>\r\n</MapMagic.Generator+Input>\r\n"
   - "<MapMagic.Generator+Output>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<guiRect
     type=UnityEngine.Rect x=655.8059 y=1682.752 width=18 height=18/>\r\n</MapMagic.Generator+Output>\r\n"
@@ -997,7 +997,7 @@ MonoBehaviour:
     type=System.Boolean value=False/>\r\n\t<parentToRoot type=System.Boolean value=False/>\r\n</MapMagic.ObjectOutput+Layer>\r\n"
   - "<MapMagic.Generator+Input>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<link
     type=MapMagic.Generator+Output link=244/>\r\n\t<linkGen type=MapMagic.Generator
-    link=245/>\r\n\t<guiRect type=UnityEngine.Rect x=844.5583 y=1756.601 width=18
+    link=245/>\r\n\t<guiRect type=UnityEngine.Rect x=846.9856 y=1777.233 width=18
     height=18/>\r\n</MapMagic.Generator+Input>\r\n"
   - "<MapMagic.Generator+Output>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<guiRect
     type=UnityEngine.Rect x=656.9437 y=1727.943 width=18 height=18/>\r\n</MapMagic.Generator+Output>\r\n"
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     type=System.Boolean value=False/>\r\n\t<parentToRoot type=System.Boolean value=False/>\r\n</MapMagic.ObjectOutput+Layer>\r\n"
   - "<MapMagic.Generator+Input>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<link
     type=MapMagic.Generator+Output link=253/>\r\n\t<linkGen type=MapMagic.Generator
-    link=254/>\r\n\t<guiRect type=UnityEngine.Rect x=844.5583 y=1782.601 width=18
+    link=254/>\r\n\t<guiRect type=UnityEngine.Rect x=846.9856 y=1803.233 width=18
     height=18/>\r\n</MapMagic.Generator+Input>\r\n"
   - "<MapMagic.Generator+Output>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<guiRect
     type=UnityEngine.Rect x=650.8517 y=1801.07 width=18 height=18/>\r\n</MapMagic.Generator+Output>\r\n"
@@ -1073,7 +1073,7 @@ MonoBehaviour:
     type=System.Boolean value=False/>\r\n\t<parentToRoot type=System.Boolean value=False/>\r\n</MapMagic.ObjectOutput+Layer>\r\n"
   - "<MapMagic.Generator+Input>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<link
     type=MapMagic.Generator+Output link=262/>\r\n\t<linkGen type=MapMagic.Generator
-    link=263/>\r\n\t<guiRect type=UnityEngine.Rect x=844.5583 y=1808.601 width=18
+    link=263/>\r\n\t<guiRect type=UnityEngine.Rect x=846.9856 y=1829.233 width=18
     height=18/>\r\n</MapMagic.Generator+Input>\r\n"
   - "<MapMagic.Generator+Output>\r\n\t<type type=MapMagic.Generator+InoutType value=1/>\r\n\t<guiRect
     type=UnityEngine.Rect x=658.2975 y=1859.146 width=18 height=18/>\r\n</MapMagic.Generator+Output>\r\n"
@@ -1146,7 +1146,7 @@ MonoBehaviour:
   - {fileID: 4356173073091618, guid: 1766fc721a9b68843be725a55c896f3c, type: 2}
   - {fileID: 4554390536330458, guid: e7323ec257e5c4b4e857b972745a410f, type: 2}
   floats: []
-  setDirty: 1
+  setDirty: 0
   serializer:
     entities: []
   listNum: 0
