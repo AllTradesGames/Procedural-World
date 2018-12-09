@@ -162,6 +162,7 @@ public class ATVRPlayerController : MonoBehaviour
     private Vector3 leftGrabPosition;
     private Transform leftHandAnchor;
     private bool isRightHandOverriding;
+	private Vector3 prevFrameGrabMove;
 
     void Start()
     {
@@ -378,9 +379,9 @@ public class ATVRPlayerController : MonoBehaviour
 
             moveInfluence = Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
 
-#if !UNITY_ANDROID // LeftTrigger not avail on Android game pad
-            moveInfluence *= 1.0f + OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
-#endif
+			#if !UNITY_ANDROID // LeftTrigger not avail on Android game pad
+            	moveInfluence *= 1.0f + OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
+			#endif
 
             Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 
@@ -430,10 +431,10 @@ public class ATVRPlayerController : MonoBehaviour
             buttonRotation = 0f;
 
 
-#if !UNITY_ANDROID || UNITY_EDITOR
-            if (!SkipMouseRotation)
-                euler.y += Input.GetAxis("Mouse X") * rotateInfluence * 3.25f;
-#endif
+			#if !UNITY_ANDROID || UNITY_EDITOR
+            	if (!SkipMouseRotation)
+                	euler.y += Input.GetAxis("Mouse X") * rotateInfluence * 3.25f;
+			#endif
 
             if (SnapRotation)
             {
@@ -485,13 +486,16 @@ public class ATVRPlayerController : MonoBehaviour
                     else if (isRightHandOverriding)
                     {
                         offset = rightGrabPosition - rightHandAnchor.position;
-                        transform.position = new Vector3(transform.position.x + offset.x, transform.position.y, transform.position.z + offset.z);
+						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y, transform.position.z + offset.z) - transform.position;
+                        transform.position += prevFrameGrabMove;
                         rightGrabPosition = rightHandAnchor.position;
+						MoveThrottle = Vector3.zero;
                     }
                 }
-                else
+                else if (rightGrabPosition != Vector3.zero)
                 {
                     rightGrabPosition = Vector3.zero;
+					MoveThrottle = prevFrameGrabMove;
                 }
             }
 
@@ -508,13 +512,16 @@ public class ATVRPlayerController : MonoBehaviour
                     else if (!isRightHandOverriding)
                     {
                         offset = leftGrabPosition - leftHandAnchor.position;
-                        transform.position = new Vector3(transform.position.x + offset.x, transform.position.y, transform.position.z + offset.z);
+						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y, transform.position.z + offset.z) - transform.position;
+                        transform.position += prevFrameGrabMove;
                         leftGrabPosition = leftHandAnchor.position;
+						MoveThrottle = Vector3.zero;
                     }
                 }
-                else
+                else if (leftGrabPosition != Vector3.zero)
                 {
                     leftGrabPosition = Vector3.zero;
+					MoveThrottle = prevFrameGrabMove;
                 }
             }
         }
