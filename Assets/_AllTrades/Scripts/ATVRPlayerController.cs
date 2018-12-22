@@ -136,6 +136,14 @@ public class ATVRPlayerController : MonoBehaviour
     public bool EnableGrabMovement = true;
 
     /// <summary>
+    /// When true, user input will be applied to hand directional boost. Movement will be applied based on a given hand's facing direction, while
+	/// pressing the boost button on that hand's controller. Set this to false whenever the player controller needs to ignore input for
+    /// boosting movement.
+    /// </summary>
+    public bool EnableHandBoost = true;
+	public float boostSpeed = 0.1f;
+
+    /// <summary>
     /// When true, user input will be applied to rotation. Set this to false whenever the player controller needs to ignore input for rotation.
     /// </summary>
     public bool EnableRotation = true;
@@ -525,7 +533,12 @@ public class ATVRPlayerController : MonoBehaviour
                 }
             }
         }
-    }
+    
+		if (EnableHandBoost)
+		{
+			
+		}
+	}
 
 
     /// <summary>
