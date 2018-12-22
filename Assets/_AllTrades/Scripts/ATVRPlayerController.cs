@@ -134,6 +134,8 @@ public class ATVRPlayerController : MonoBehaviour
     /// grabbing movement.
     /// </summary>
     public bool EnableGrabMovement = true;
+    public bool EnableGrabY = false;
+    public float GrabMoveThreshold = 0.1f;
 
     /// <summary>
     /// When true, user input will be applied to hand directional boost. Movement will be applied based on a given hand's facing direction, while
@@ -494,7 +496,7 @@ public class ATVRPlayerController : MonoBehaviour
                     else if (isRightHandOverriding)
                     {
                         offset = rightGrabPosition - rightHandAnchor.position;
-						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y, transform.position.z + offset.z) - transform.position;
+						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y + (EnableGrabY ? offset.y : 0f), transform.position.z + offset.z) - transform.position;
                         transform.position += prevFrameGrabMove;
                         rightGrabPosition = rightHandAnchor.position;
 						MoveThrottle = Vector3.zero;
@@ -503,7 +505,10 @@ public class ATVRPlayerController : MonoBehaviour
                 else if (rightGrabPosition != Vector3.zero)
                 {
                     rightGrabPosition = Vector3.zero;
-					MoveThrottle = prevFrameGrabMove;
+                    if (prevFrameGrabMove.magnitude > GrabMoveThreshold)
+                    {
+					    MoveThrottle = prevFrameGrabMove;
+                    }
                 }
             }
 
@@ -520,7 +525,7 @@ public class ATVRPlayerController : MonoBehaviour
                     else if (!isRightHandOverriding)
                     {
                         offset = leftGrabPosition - leftHandAnchor.position;
-						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y, transform.position.z + offset.z) - transform.position;
+						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y + (EnableGrabY ? offset.y : 0f), transform.position.z + offset.z) - transform.position;
                         transform.position += prevFrameGrabMove;
                         leftGrabPosition = leftHandAnchor.position;
 						MoveThrottle = Vector3.zero;
@@ -529,7 +534,10 @@ public class ATVRPlayerController : MonoBehaviour
                 else if (leftGrabPosition != Vector3.zero)
                 {
                     leftGrabPosition = Vector3.zero;
-					MoveThrottle = prevFrameGrabMove;
+                    if (prevFrameGrabMove.magnitude > GrabMoveThreshold)
+                    {
+					    MoveThrottle = prevFrameGrabMove;
+                    }
                 }
             }
         }
