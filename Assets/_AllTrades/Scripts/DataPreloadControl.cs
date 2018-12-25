@@ -6,9 +6,9 @@ using Oculus.Platform;
 
 public class DataPreloadControl : MonoBehaviour
 {
+    public AT_proto_User user;
 
-    Oculus.Platform.Models.User user;
-    UInt64 orgScopedID;
+    Oculus.Platform.Models.User OVRuser;
 
     void Awake()
     {
@@ -33,8 +33,8 @@ public class DataPreloadControl : MonoBehaviour
             }
             else
             {
-                user = msg.GetUser();
-                Users.GetOrgScopedID(user.ID).OnComplete((Message ms) =>
+                OVRuser = msg.GetUser();
+                Users.GetOrgScopedID(OVRuser.ID).OnComplete((Message ms) =>
                 {
                     if (ms.IsError)
                     {
@@ -42,13 +42,13 @@ public class DataPreloadControl : MonoBehaviour
                     }
                     else
                     {
-                        orgScopedID = ms.GetOrgScopedID().ID;
+                        user = new AT_proto_User(ms.GetOrgScopedID().ID, OVRuser.OculusID);
 
-                        Debug.Log("Logged in user: " + user.OculusID + ", App Relative ID: " + user.ID);
-                        Debug.Log("Org Scoped ID: " + orgScopedID);
+                        Debug.Log("Logged in Oculus user: " + OVRuser.OculusID + ", App Relative ID: " + OVRuser.ID);
+                        Debug.Log("Org Scoped ID: " + user.orgScopedID);
 
                         Debug.Log("Getting User Data...");
-                        StartCoroutine(GetUserData(orgScopedID));
+                        StartCoroutine(GetUserData(user));
                     }
                 });
             }
@@ -82,9 +82,9 @@ public class DataPreloadControl : MonoBehaviour
         }
     }
 
-    IEnumerator GetUserData(UInt64 orgScopedID)
+    IEnumerator GetUserData(AT_proto_User in_user)
     {
-        UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get("https://us-central1-prototype-backend.cloudfunctions.net/get-user-data?orgscopedid=" + orgScopedID);
+        UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get("https://us-central1-prototype-backend.cloudfunctions.net/get-user-data?orgscopedid=" + in_user.orgScopedID + "&screenname=" + in_user.screenName);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
@@ -95,8 +95,14 @@ public class DataPreloadControl : MonoBehaviour
         {
             // Show results as text
             Debug.Log(www.downloadHandler.text);
-            // TODO: Store retrieved data as User class
-            // TODO: Check if screenName is "". If so, prompt user for screenName
+
+            // Store results as User class
+            JsonUtility.FromJsonOverwrite(www.downloadHandler.text, user);
+
+            if(www.responseCode == 201)
+            {
+                // New User was created
+            }
         }
     }
 
