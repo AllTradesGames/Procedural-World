@@ -29,6 +29,7 @@ public class DataPreloadControl : MonoBehaviour
             if (msg.IsError)
             {
                 Debug.LogError("Error getting logged in user.");
+                UnityEngine.Application.Quit();
             }
             else
             {
@@ -45,6 +46,9 @@ public class DataPreloadControl : MonoBehaviour
 
                         Debug.Log("Logged in user: " + user.OculusID + ", App Relative ID: " + user.ID);
                         Debug.Log("Org Scoped ID: " + orgScopedID);
+
+                        Debug.Log("Getting User Data...");
+                        StartCoroutine(GetUserData(orgScopedID));
                     }
                 });
             }
@@ -77,4 +81,24 @@ public class DataPreloadControl : MonoBehaviour
             Debug.Log("Oculus User Entitlement check passed.");
         }
     }
+
+    IEnumerator GetUserData(UInt64 orgScopedID)
+    {
+        UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get("https://us-central1-prototype-backend.cloudfunctions.net/get-user-data?orgscopedid=" + orgScopedID);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.LogError(www.error);
+        }
+        else
+        {
+            // Show results as text
+            Debug.Log(www.downloadHandler.text);
+            // TODO: Store retrieved data as User class
+            // TODO: Check if screenName is "". If so, prompt user for screenName
+        }
+    }
+
+
 }
