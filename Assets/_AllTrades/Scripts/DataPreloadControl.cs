@@ -7,6 +7,7 @@ using Oculus.Platform;
 public class DataPreloadControl : MonoBehaviour
 {
     public AT_proto_User user;
+    public AT_proto_Core core;
 
     Oculus.Platform.Models.User OVRuser;
 
@@ -49,6 +50,9 @@ public class DataPreloadControl : MonoBehaviour
 
                         Debug.Log("Getting User Data...");
                         StartCoroutine(GetUserData(user));
+
+                        Debug.Log("Getting Core Data...");
+                        StartCoroutine(GetCoreData(user));
                     }
                 });
             }
@@ -102,6 +106,31 @@ public class DataPreloadControl : MonoBehaviour
             if(www.responseCode == 201)
             {
                 // New User was created
+            }
+        }
+    }
+
+    IEnumerator GetCoreData(AT_proto_User in_user)
+    {
+        UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get("https://us-central1-prototype-backend.cloudfunctions.net/get-core-data?orgscopedid=" + in_user.orgScopedID);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.LogError(www.error);
+        }
+        else
+        {
+            // Show results as text
+            Debug.Log(www.downloadHandler.text);
+
+            // Store results as Core class
+            JsonUtility.FromJsonOverwrite(www.downloadHandler.text, core);
+            Debug.Log("points: " + core.availablePoints + " placements[0]: " + core.placements[0].x + ", " + core.placements[0].y + ", " + core.placements[0].z );
+
+            if(www.responseCode == 201)
+            {
+                // New Core was created
             }
         }
     }
