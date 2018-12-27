@@ -2,17 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Oculus.Platform;
 
 public class DataPreloadControl : MonoBehaviour
 {
-    public AT_proto_User user;
-    public AT_proto_Core core;
-
-    Oculus.Platform.Models.User OVRuser;
+    ATVRPlayerData playerData;
+    bool userDone = false;
+    bool coreDone = false;
+    bool sceneDone = false;
 
     void Awake()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            playerData = player.GetComponent<ATVRPlayerData>();
+
         try
         {
             Core.AsyncInitialize();
@@ -34,8 +39,8 @@ public class DataPreloadControl : MonoBehaviour
             }
             else
             {
-                OVRuser = msg.GetUser();
-                Users.GetOrgScopedID(OVRuser.ID).OnComplete((Message ms) =>
+                playerData.OVRuser = msg.GetUser();
+                Users.GetOrgScopedID(playerData.OVRuser.ID).OnComplete((Message ms) =>
                 {
                     if (ms.IsError)
                     {
@@ -43,32 +48,23 @@ public class DataPreloadControl : MonoBehaviour
                     }
                     else
                     {
-                        user = new AT_proto_User(ms.GetOrgScopedID().ID, OVRuser.OculusID);
+                        playerData.user = new AT_proto_User(ms.GetOrgScopedID().ID, playerData.OVRuser.OculusID);
 
-                        Debug.Log("Logged in Oculus user: " + OVRuser.OculusID + ", App Relative ID: " + OVRuser.ID);
-                        Debug.Log("Org Scoped ID: " + user.orgScopedID);
+                        Debug.Log("Logged in Oculus user: " + playerData.OVRuser.OculusID + ", App Relative ID: " + playerData.OVRuser.ID);
+                        Debug.Log("Org Scoped ID: " + playerData.user.orgScopedID);
 
                         Debug.Log("Getting User Data...");
-                        StartCoroutine(GetUserData(user));
+                        StartCoroutine(GetUserData(playerData.user));
 
                         Debug.Log("Getting Core Data...");
-                        StartCoroutine(GetCoreData(user));
+                        StartCoroutine(GetCoreData(playerData.user));
+
+                        Debug.Log("Loading next scene...");
+                        StartCoroutine(LoadSceneAsync());
                     }
                 });
             }
         });
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void CheckEntitlement(Message msg)
@@ -101,12 +97,15 @@ public class DataPreloadControl : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
 
             // Store results as User class
-            JsonUtility.FromJsonOverwrite(www.downloadHandler.text, user);
+            JsonUtility.FromJsonOverwrite(www.downloadHandler.text, playerData.user);
 
-            if(www.responseCode == 201)
+            if (www.responseCode == 201)
             {
                 // New User was created
             }
+
+            userDone = true;
+            CheckIfAllDone();
         }
     }
 
@@ -125,13 +124,39 @@ public class DataPreloadControl : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
 
             // Store results as Core class
-            JsonUtility.FromJsonOverwrite(www.downloadHandler.text, core);
-            Debug.Log("points: " + core.availablePoints + " placements[0]: " + core.placements[0].x + ", " + core.placements[0].y + ", " + core.placements[0].z );
+            JsonUtility.FromJsonOverwrite(www.downloadHandler.text, playerData.core);
+            playerData.core.pList = new List<AT_proto_V3>(playerData.core.placements);
+            Debug.Log("points: " + playerData.core.availablePoints + " placements[0]: " + playerData.core.placements[0].x + ", " + playerData.core.placements[0].y + ", " + playerData.core.placements[0].z);
 
-            if(www.responseCode == 201)
+            if (www.responseCode == 201)
             {
                 // New Core was created
             }
+
+            coreDone = true;
+            CheckIfAllDone();
+        }
+    }
+
+    IEnumerator LoadSceneAsync()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        sceneDone = true;
+        CheckIfAllDone();
+    }
+
+    void CheckIfAllDone()
+    {
+        if (userDone && coreDone && sceneDone)
+        {
+            Debug.Log("All Loading Finished. Destroying DataPreloadControl.");
+            DestroyImmediate(this.gameObject);
         }
     }
 
