@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -111,7 +112,7 @@ MonoBehaviour:
   m_snowGlitterTiling: 2.5
   m_geoAlbedoTexture: {fileID: 2800000, guid: a8b026679658e0a458404f9f86468a66, type: 3}
   m_terrainTextures:
-  - m_isOpenInEditor: 1
+  - m_isOpenInEditor: 0
     m_textureIdx: 0
     m_name: Grass_Dried_omgra0_Albedo
     m_detailPower: 1

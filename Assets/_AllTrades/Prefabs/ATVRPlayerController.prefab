@@ -1432,13 +1432,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
+  m_Height: 3
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -1.5, z: 0}
 --- !u!114 &1617729995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1494,6 +1494,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe16f02d14a72144afa792c307ad5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  user:
+    orgScopedID: 0
+    screenName: 
+    level: 0
+    experience: 0
+  core:
+    availablePoints: 1
+    placements:
+    - x: 0
+      y: 0
+      z: 0
+    pList:
+    - x: 0
+      y: 0
+      z: 0
 --- !u!1 &1644462881
 GameObject:
   m_ObjectHideFlags: 0

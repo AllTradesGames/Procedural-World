@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/_AllTrades/Scenes/Data Preload.unity
     guid: fd40c43bd78661c41ae6ab2b5e4d3088
   - enabled: 1
-    path: Assets/_AllTrades/Scenes/Hills-proto.unity
-    guid: dafcfdabc84b89a4fa6027b4f3167231
+    path: Assets/_AllTrades/Scenes/OutdoorLobby.unity
+    guid: cd7e6e37300b1ec4cb0bbfddf2bcfa6d
   m_configObjects: {}
