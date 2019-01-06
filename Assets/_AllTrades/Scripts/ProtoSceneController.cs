@@ -5,6 +5,8 @@ using UnityEngine;
 public class ProtoSceneController : MonoBehaviour
 {
     // This script does all the necessary hookups to run the prototype scene error-free
+    public Material skyboxMat;
+
 
     ATVRPlayerController pcScript;
     ATVRPlayerData pdScript;
@@ -21,7 +23,14 @@ public class ProtoSceneController : MonoBehaviour
             player.Find("Menu Canvas/Text").GetComponent<UnityEngine.UI.Text>().text = "";
         }
 
-        Destroy(Camera.main.GetComponent<Skybox>());
+        if(skyboxMat != null)
+        {
+            Camera.main.GetComponent<Skybox>().material = skyboxMat;
+        }
+        else 
+        {
+            Destroy(Camera.main.GetComponent<Skybox>());
+        }
     }
 
 

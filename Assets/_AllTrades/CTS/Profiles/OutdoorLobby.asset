@@ -25,8 +25,8 @@ MonoBehaviour:
   m_showOptimisationSettings: 0
   m_ctsDirectory: Assets/CTS/
   m_shaderType: 4
-  m_globalUvMixPower: 3.52
-  m_globalUvMixStartDistance: 5
+  m_globalUvMixPower: 4
+  m_globalUvMixStartDistance: 24
   m_globalNormalPower: 0.2
   m_globalDetailNormalClosePower: 0
   m_globalDetailNormalCloseTiling: 60
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_terrainTextures:
   - m_isOpenInEditor: 1
     m_textureIdx: 0
-    m_name: Grass_Dried_omgra0_Albedo
+    m_name: Grass_pe1jvwp0_Albedo
     m_detailPower: 1
     m_snowReductionPower: 0
     m_geologicalPower: 1
@@ -125,13 +125,13 @@ MonoBehaviour:
     m_albedoIdx: 0
     m_albedoTilingClose: 1
     m_albedoTilingFar: 3
-    m_albedoAverage: {x: 0.06301003, y: 0.039546236, z: 0.019382361, w: 1}
-    m_albedoTexture: {fileID: 2800000, guid: f9938834d116e9646b7884cc8cb33e86, type: 3}
+    m_albedoAverage: {x: 0.036889445, y: 0.056128494, z: 0.0074990317, w: 1}
+    m_albedoTexture: {fileID: 2800000, guid: 3bfc82ddb8272404aa836168b0ee9f26, type: 3}
     m_smoothnessTexture: {fileID: 0}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 0
     m_normalStrength: 2
-    m_normalTexture: {fileID: 2800000, guid: 637503bc1851f7843ac9f5498f6f5688, type: 3}
+    m_normalTexture: {fileID: 2800000, guid: 12e2e3fa536f0bc4d9210f52a33e4c81, type: 3}
     m_heightIdx: -1
     m_heightDepth: 8
     m_heightContrast: 1
@@ -219,9 +219,9 @@ MonoBehaviour:
     m_emissionTexture: {fileID: 0}
   m_replacementTerrainAlbedos: []
   m_replacementTerrainNormals: []
-  m_albedosTextureArray: {fileID: 18700000, guid: 2f8370c2ffc1e374ea05ef7799fd996e,
+  m_albedosTextureArray: {fileID: 18700000, guid: 71cb4e9047750394ba4252501ac4a19a,
     type: 2}
   m_needsAlbedosArrayUpdate: 0
-  m_normalsTextureArray: {fileID: 18700000, guid: 34e6099a973085d4290a9d265edcaa92,
+  m_normalsTextureArray: {fileID: 18700000, guid: 770a9a4411f087b40895918cd92cb4a2,
     type: 2}
   m_needsNormalsArrayUpdate: 0
