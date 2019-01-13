@@ -1923,6 +1923,7 @@ public class EnviroSky : MonoBehaviour
 		//Set SolarTime: 1 = mid-day (sun directly above you), 0.5 = sunset/dawn, 0 = midnight;
 		GameTime.solarTime = Mathf.Clamp01(Remap (sunTheta, -1.5f, 0f, 1.5f, 1f));
 
+		Debug.Log(SunTransform);
 		SunTransform.localPosition = OrbitalToLocal(sunTheta, sunPhi);
 		SunTransform.LookAt(DomeTransform.position);
 
