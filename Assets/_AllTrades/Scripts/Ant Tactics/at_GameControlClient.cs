@@ -6,6 +6,12 @@ public class at_GameControlClient : MonoBehaviour
 {
     public int team;
 
+    private at_ECSBootstrap bootstrapper;
+
+    void Awake()
+    {
+        bootstrapper = transform.Find("AT ECS Bootstrapper").GetComponent<at_ECSBootstrap>();
+    }
 
     // Start is called before the first frame update
     void Start()
