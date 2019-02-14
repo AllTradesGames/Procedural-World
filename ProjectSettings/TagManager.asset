@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RightHandAnchor
   - CoreEditor
+  - Weapon
   layers:
   - Default
   - TransparentFX

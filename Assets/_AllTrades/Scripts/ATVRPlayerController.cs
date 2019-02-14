@@ -21,6 +21,7 @@ limitations under the License.
 
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 /// <summary>
 /// Controls the player's movement in virtual reality.
@@ -143,7 +144,24 @@ public class ATVRPlayerController : MonoBehaviour
     /// boosting movement.
     /// </summary>
     public bool EnableHandBoost = true;
-	public float boostSpeed = 0.1f;
+    public bool EnableBoostY = false;
+    public float boostAddPerFrame = 0.001f;
+    public float boostDampPercentPerFrame = 0.02f;
+    public float maxBoostSpeed = 0.05f;
+    public bool EnableQuickBoost = true;
+    public bool vignetteOnQuickBoost = true;
+    [HideInInspector]
+    public delegate void OnQuickBoostStart(); // For outside scripts
+    [HideInInspector]
+    public OnQuickBoostStart onQuickBoostStart;
+    [HideInInspector]
+    public delegate void OnQuickBoostEnd(); // For outside scripts
+    [HideInInspector]
+    public OnQuickBoostEnd onQuickBoostEnd;
+    public float qbActivateWindow = 0.4f;
+    public float quickBoostCooldown = 0.5f;
+    public float quickBoostDuration = 0.3f;
+    public float quickBoostSpeed = 1f;
 
     /// <summary>
     /// When true, user input will be applied to rotation. Set this to false whenever the player controller needs to ignore input for rotation.
@@ -169,10 +187,32 @@ public class ATVRPlayerController : MonoBehaviour
     private bool ReadyToSnapTurn; // Set to true when a snap turn has occurred, code requires one frame of centered thumbstick to enable another snap turn.
     private Vector3 rightGrabPosition;
     private Transform rightHandAnchor;
+    private Transform rightWeapon;
     private Vector3 leftGrabPosition;
     private Transform leftHandAnchor;
+    private Transform leftWeapon;
     private bool isRightHandOverriding;
-	private Vector3 prevFrameGrabMove;
+    private Vector3 prevFrameMove;
+    private float leftBoostReleaseTime = 0f;
+    private float rightBoostReleaseTime = 0f;
+    private float lastQuickBoostTime = 0f;
+    private bool isQuickBoosting = false;
+    private PostProcessVolume ppv;
+    private Vignette vigLayer;
+    private PreBoostVigConfig preBoostVigConfig;
+    private class PreBoostVigConfig
+    {
+        public bool enabled = false;
+        public float intensity = 0f;
+        public float smoothness = 0f;
+
+        public PreBoostVigConfig(bool en, float inten, float sm)
+        {
+            enabled = en;
+            intensity = inten;
+            smoothness = sm;
+        }
+    }
 
     void Start()
     {
@@ -389,9 +429,9 @@ public class ATVRPlayerController : MonoBehaviour
 
             moveInfluence = Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
 
-			#if !UNITY_ANDROID // LeftTrigger not avail on Android game pad
-            	moveInfluence *= 1.0f + OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
-			#endif
+#if !UNITY_ANDROID // LeftTrigger not avail on Android game pad
+            moveInfluence *= 1.0f + OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
+#endif
 
             Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
 
@@ -441,10 +481,10 @@ public class ATVRPlayerController : MonoBehaviour
             buttonRotation = 0f;
 
 
-			#if !UNITY_ANDROID || UNITY_EDITOR
-            	if (!SkipMouseRotation)
-                	euler.y += Input.GetAxis("Mouse X") * rotateInfluence * 3.25f;
-			#endif
+#if !UNITY_ANDROID || UNITY_EDITOR
+            if (!SkipMouseRotation)
+                euler.y += Input.GetAxis("Mouse X") * rotateInfluence * 3.25f;
+#endif
 
             if (SnapRotation)
             {
@@ -496,18 +536,18 @@ public class ATVRPlayerController : MonoBehaviour
                     else if (isRightHandOverriding)
                     {
                         offset = rightGrabPosition - rightHandAnchor.position;
-						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y + (EnableGrabY ? offset.y : 0f), transform.position.z + offset.z) - transform.position;
-                        transform.position += prevFrameGrabMove;
+                        prevFrameMove = new Vector3(transform.position.x + offset.x, transform.position.y + (EnableGrabY ? offset.y : 0f), transform.position.z + offset.z) - transform.position;
+                        transform.position += prevFrameMove;
                         rightGrabPosition = rightHandAnchor.position;
-						MoveThrottle = Vector3.zero;
+                        MoveThrottle = Vector3.zero;
                     }
                 }
                 else if (rightGrabPosition != Vector3.zero)
                 {
                     rightGrabPosition = Vector3.zero;
-                    if (prevFrameGrabMove.magnitude > GrabMoveThreshold)
+                    if (prevFrameMove.magnitude > GrabMoveThreshold)
                     {
-					    MoveThrottle = prevFrameGrabMove;
+                        MoveThrottle = prevFrameMove;
                     }
                 }
             }
@@ -525,28 +565,155 @@ public class ATVRPlayerController : MonoBehaviour
                     else if (!isRightHandOverriding)
                     {
                         offset = leftGrabPosition - leftHandAnchor.position;
-						prevFrameGrabMove = new Vector3(transform.position.x + offset.x, transform.position.y + (EnableGrabY ? offset.y : 0f), transform.position.z + offset.z) - transform.position;
-                        transform.position += prevFrameGrabMove;
+                        prevFrameMove = new Vector3(transform.position.x + offset.x, transform.position.y + (EnableGrabY ? offset.y : 0f), transform.position.z + offset.z) - transform.position;
+                        transform.position += prevFrameMove;
                         leftGrabPosition = leftHandAnchor.position;
-						MoveThrottle = Vector3.zero;
+                        MoveThrottle = Vector3.zero;
                     }
                 }
                 else if (leftGrabPosition != Vector3.zero)
                 {
                     leftGrabPosition = Vector3.zero;
-                    if (prevFrameGrabMove.magnitude > GrabMoveThreshold)
+                    if (prevFrameMove.magnitude > GrabMoveThreshold)
                     {
-					    MoveThrottle = prevFrameGrabMove;
+                        MoveThrottle = prevFrameMove;
                     }
                 }
             }
         }
-    
-		if (EnableHandBoost)
-		{
-			
-		}
-	}
+
+        if (EnableHandBoost)
+        {
+            if (leftWeapon == null)
+            {
+                leftWeapon = leftHandAnchor.Find("Weapon");
+            }
+            if (rightWeapon == null)
+            {
+                rightWeapon = rightHandAnchor.Find("Weapon");
+            }
+            prevFrameMove = new Vector3(MoveThrottle.x, MoveThrottle.y, MoveThrottle.z);
+            if (Input.GetButton("Oculus_CrossPlatform_Button3"))
+            {
+                if (leftWeapon == null || leftWeapon.gameObject.activeSelf == false)
+                {
+                    MoveThrottle = EnableBoostY ? leftHandAnchor.forward : new Vector3(leftHandAnchor.forward.x, 0f, leftHandAnchor.forward.z);
+                }
+                else
+                {
+                    MoveThrottle = EnableBoostY ? -leftWeapon.right : new Vector3(-leftWeapon.right.x, 0f, -leftWeapon.right.z);
+                }
+            }
+            else
+            {
+                MoveThrottle = Vector3.zero;
+            }
+
+            if (Input.GetButton("Oculus_CrossPlatform_Button1"))
+            {
+                if (rightWeapon == null || rightWeapon.gameObject.activeSelf == false)
+                {
+                    MoveThrottle += EnableBoostY ? rightHandAnchor.forward : new Vector3(rightHandAnchor.forward.x, 0f, rightHandAnchor.forward.z);
+                }
+                else
+                {
+                    MoveThrottle = EnableBoostY ? -rightWeapon.right : new Vector3(-rightWeapon.right.x, 0f, -rightWeapon.right.z);
+                }
+                MoveThrottle.Normalize();
+            }
+
+            if (MoveThrottle.magnitude == 0)
+            {
+                MoveThrottle = prevFrameMove * (1f - boostDampPercentPerFrame);
+            }
+            else
+            {
+                MoveThrottle *= boostAddPerFrame;
+                MoveThrottle += prevFrameMove;
+                if (MoveThrottle.magnitude > maxBoostSpeed)
+                {
+                    if (EnableQuickBoost && isQuickBoosting)
+                    {
+                        MoveThrottle *= (1f - boostDampPercentPerFrame);
+                    }
+                    else
+                    {
+                        MoveThrottle = MoveThrottle.normalized * maxBoostSpeed;
+                    }
+                }
+            }
+        }
+
+        if (EnableQuickBoost)
+        {
+            if (Time.time > lastQuickBoostTime + quickBoostCooldown)
+            {
+                if (Input.GetButtonDown("Oculus_CrossPlatform_Button3") && Time.time - leftBoostReleaseTime < qbActivateWindow)
+                {
+                    lastQuickBoostTime = Time.time;
+                    isQuickBoosting = true;
+                    if (onQuickBoostStart != null)
+                        onQuickBoostStart();
+                    MoveThrottle += EnableBoostY ? leftHandAnchor.forward : new Vector3(leftHandAnchor.forward.x, 0f, leftHandAnchor.forward.z);
+                }
+                if (Input.GetButtonDown("Oculus_CrossPlatform_Button1") && Time.time - rightBoostReleaseTime < qbActivateWindow)
+                {
+                    lastQuickBoostTime = Time.time;
+                    isQuickBoosting = true;
+                    if (onQuickBoostStart != null)
+                        onQuickBoostStart();
+                    MoveThrottle += EnableBoostY ? rightHandAnchor.forward : new Vector3(rightHandAnchor.forward.x, 0f, rightHandAnchor.forward.z);
+                }
+                if (isQuickBoosting && vignetteOnQuickBoost)
+                {
+                    ppv = Camera.main.GetComponent<PostProcessVolume>();
+                    if (ppv != null)
+                    {
+                        ppv.profile.TryGetSettings(out vigLayer);
+                        if (vigLayer != null)
+                        {
+                            preBoostVigConfig = new PreBoostVigConfig(vigLayer.enabled.value, vigLayer.intensity.value, vigLayer.smoothness.value);
+                            vigLayer.enabled.value = true;
+                            vigLayer.intensity.value = 1f;
+                            vigLayer.smoothness.value = 1f;
+                        }
+                    }
+                }
+            }
+            if (isQuickBoosting)
+            {
+                MoveThrottle = MoveThrottle.normalized * quickBoostSpeed;
+                if (Time.time > lastQuickBoostTime + quickBoostDuration)
+                {
+                    if (onQuickBoostEnd != null)
+                        onQuickBoostEnd();
+                    isQuickBoosting = false;
+                    if (vignetteOnQuickBoost)
+                    {
+                        ppv = Camera.main.GetComponent<PostProcessVolume>();
+                        if (ppv != null)
+                        {
+                            ppv.profile.TryGetSettings(out vigLayer);
+                            if (vigLayer != null && preBoostVigConfig != null)
+                            {
+                                vigLayer.enabled.value = preBoostVigConfig.enabled;
+                                vigLayer.intensity.value = preBoostVigConfig.intensity;
+                                vigLayer.smoothness.value = preBoostVigConfig.smoothness;
+                            }
+                        }
+                    }
+                }
+            }
+            if (Input.GetButtonUp("Oculus_CrossPlatform_Button3"))
+            {
+                leftBoostReleaseTime = Time.time;
+            }
+            if (Input.GetButtonUp("Oculus_CrossPlatform_Button1"))
+            {
+                rightBoostReleaseTime = Time.time;
+            }
+        }
+    }
 
 
     /// <summary>
