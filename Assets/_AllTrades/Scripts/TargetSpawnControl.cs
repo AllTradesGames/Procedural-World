@@ -42,11 +42,11 @@ public class TargetSpawnControl : MonoBehaviour
 
     public void Sliced(int id)
     {
-        Debug.Log("Target " + id + " was sliced!");
+        // Debug.Log("Target " + id + " was sliced!");
     }
 
     public void Missed(int id)
     {
-        Debug.Log("Target " + id + " was missed!");
+        // Debug.Log("Target " + id + " was missed!");
     }
 }

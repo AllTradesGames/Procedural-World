@@ -1743,7 +1743,7 @@ PrefabInstance:
     - target: {fileID: 7306279234914443119, guid: e33216d674ded2b4685775f712305597,
         type: 3}
       propertyPath: m_Name
-      value: Sword
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 7307273176265224535, guid: e33216d674ded2b4685775f712305597,
         type: 3}

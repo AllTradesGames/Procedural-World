@@ -131,6 +131,11 @@ public class ATVRPlayerController : MonoBehaviour
     public bool EnableLinearMovement = true;
 
     /// <summary>
+    /// When true, user input will be applied to rotation. Set this to false whenever the player controller needs to ignore input for rotation.
+    /// </summary>
+    public bool EnableRotation = true;
+
+    /// <summary>
     /// When true, user input will be applied to grabbing movement. Set this to false whenever the player controller needs to ignore input for
     /// grabbing movement.
     /// </summary>
@@ -146,8 +151,9 @@ public class ATVRPlayerController : MonoBehaviour
     public bool EnableHandBoost = true;
     public bool EnableBoostY = false;
     public float boostAddPerFrame = 0.001f;
-    public float boostDampPercentPerFrame = 0.02f;
+    public float boostDampPerFrame = 0.02f;
     public float maxBoostSpeed = 0.05f;
+
     public bool EnableQuickBoost = true;
     public bool vignetteOnQuickBoost = true;
     [HideInInspector]
@@ -163,10 +169,13 @@ public class ATVRPlayerController : MonoBehaviour
     public float quickBoostDuration = 0.3f;
     public float quickBoostSpeed = 1f;
 
-    /// <summary>
-    /// When true, user input will be applied to rotation. Set this to false whenever the player controller needs to ignore input for rotation.
-    /// </summary>
-    public bool EnableRotation = true;
+    public Shader shaderGround;
+    public Shader shaderBlur;
+    public Material materialTerrain;
+
+    public bool EnableMultipliedAccel = false;
+    public float accelMultiplier = 0.1f;
+    public float accelThreshold = 0.1f;
 
     protected CharacterController Controller = null;
     protected OVRCameraRig CameraRig = null;
@@ -214,6 +223,9 @@ public class ATVRPlayerController : MonoBehaviour
         }
     }
 
+    private Vector3 accelAnchor;
+    private Transform headAnchor;
+
     void Start()
     {
         // Add eye-depth as a camera offset from the player controller
@@ -244,6 +256,8 @@ public class ATVRPlayerController : MonoBehaviour
 
         rightHandAnchor = transform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor");
         leftHandAnchor = transform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor");
+        headAnchor = transform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor");
+
     }
 
     void OnEnable()
@@ -592,7 +606,9 @@ public class ATVRPlayerController : MonoBehaviour
             {
                 rightWeapon = rightHandAnchor.Find("Weapon");
             }
+
             prevFrameMove = new Vector3(MoveThrottle.x, MoveThrottle.y, MoveThrottle.z);
+
             if (Input.GetButton("Oculus_CrossPlatform_Button3"))
             {
                 if (leftWeapon == null || leftWeapon.gameObject.activeSelf == false)
@@ -619,12 +635,15 @@ public class ATVRPlayerController : MonoBehaviour
                 {
                     MoveThrottle = EnableBoostY ? -rightWeapon.right : new Vector3(-rightWeapon.right.x, 0f, -rightWeapon.right.z);
                 }
-                MoveThrottle.Normalize();
             }
+
+            MoveThrottle.Normalize();
 
             if (MoveThrottle.magnitude == 0)
             {
-                MoveThrottle = prevFrameMove * (1f - boostDampPercentPerFrame);
+                float mag = prevFrameMove.magnitude - boostDampPerFrame;
+                mag = mag > 0f ? mag : 0f;
+                MoveThrottle = prevFrameMove.normalized * mag;
             }
             else
             {
@@ -634,7 +653,7 @@ public class ATVRPlayerController : MonoBehaviour
                 {
                     if (EnableQuickBoost && isQuickBoosting)
                     {
-                        MoveThrottle *= (1f - boostDampPercentPerFrame);
+                        MoveThrottle = prevFrameMove.normalized * (prevFrameMove.magnitude - boostDampPerFrame);
                     }
                     else
                     {
@@ -642,6 +661,16 @@ public class ATVRPlayerController : MonoBehaviour
                     }
                 }
             }
+
+            if (MoveThrottle.magnitude == 0)
+            {
+                materialTerrain.shader = shaderGround;
+            }
+            else
+            {
+                materialTerrain.shader = shaderBlur;
+            }
+
         }
 
         if (EnableQuickBoost)
@@ -712,6 +741,36 @@ public class ATVRPlayerController : MonoBehaviour
             {
                 rightBoostReleaseTime = Time.time;
             }
+        }
+
+        if (EnableMultipliedAccel)
+        {
+            prevFrameMove = new Vector3(MoveThrottle.x, MoveThrottle.y, MoveThrottle.z);
+            if (Input.GetButtonDown("Oculus_CrossPlatform_Button2") || Input.GetButtonDown("Oculus_CrossPlatform_Button4"))
+            {
+                accelAnchor = headAnchor.position;
+            }
+            else if (Input.GetButton("Oculus_CrossPlatform_Button2") || Input.GetButton("Oculus_CrossPlatform_Button4"))
+            {
+                MoveThrottle = new Vector3(headAnchor.position.x - accelAnchor.x, 0f, headAnchor.position.z - accelAnchor.z);
+                if (MoveThrottle.magnitude > accelThreshold)
+                {
+                    MoveThrottle *= accelMultiplier;
+                }
+                else
+                {
+                    float mag = prevFrameMove.magnitude - accelMultiplier * accelThreshold;
+                    mag = mag > 0f ? mag : 0f;
+                    MoveThrottle = prevFrameMove.normalized * mag;
+                }
+            }
+            else
+            {
+                float mag = prevFrameMove.magnitude - accelMultiplier * accelThreshold;
+                mag = mag > 0f ? mag : 0f;
+                MoveThrottle = prevFrameMove.normalized * mag;
+            }
+            accelAnchor = headAnchor.position;
         }
     }
 
