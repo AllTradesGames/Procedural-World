@@ -746,16 +746,17 @@ public class ATVRPlayerController : MonoBehaviour
         if (EnableMultipliedAccel)
         {
             prevFrameMove = new Vector3(MoveThrottle.x, MoveThrottle.y, MoveThrottle.z);
-            if (Input.GetButtonDown("Oculus_CrossPlatform_Button2") || Input.GetButtonDown("Oculus_CrossPlatform_Button4"))
+            /*if (Input.GetButtonDown("Oculus_CrossPlatform_Button2") || Input.GetButtonDown("Oculus_CrossPlatform_Button4"))
             {
-                accelAnchor = headAnchor.position;
+                // accelAnchor = headAnchor.position;
             }
             else if (Input.GetButton("Oculus_CrossPlatform_Button2") || Input.GetButton("Oculus_CrossPlatform_Button4"))
-            {
+            {*/
                 MoveThrottle = new Vector3(headAnchor.position.x - accelAnchor.x, 0f, headAnchor.position.z - accelAnchor.z);
                 if (MoveThrottle.magnitude > accelThreshold)
                 {
                     MoveThrottle *= accelMultiplier;
+                    Debug.Log((headAnchor.position - transform.position).magnitude.ToString("F5"));
                 }
                 else
                 {
@@ -763,13 +764,13 @@ public class ATVRPlayerController : MonoBehaviour
                     mag = mag > 0f ? mag : 0f;
                     MoveThrottle = prevFrameMove.normalized * mag;
                 }
-            }
+           /* }
             else
             {
-                float mag = prevFrameMove.magnitude - accelMultiplier * accelThreshold;
+                float mag = prevFrameMove.magnitude - accelMultiplier;
                 mag = mag > 0f ? mag : 0f;
                 MoveThrottle = prevFrameMove.normalized * mag;
-            }
+            }*/
             accelAnchor = headAnchor.position;
         }
     }
