@@ -14,8 +14,16 @@ public class FollowTransform : MonoBehaviour
 
     void Awake()
     {
-        transform.position = target.position;
-        transform.rotation = target.rotation;
+        if (target != null)
+        {
+            transform.position = target.position;
+            transform.rotation = target.rotation;
+            ATVRPlayerController playerController = target.root.GetComponent<ATVRPlayerController>();
+            if (playerController != null)
+            {
+                playerController.onRotate += this.Rotate;
+            }
+        }
     }
 
     void LateUpdate()
@@ -38,5 +46,10 @@ public class FollowTransform : MonoBehaviour
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, lerpRotSpeed * Time.deltaTime);
             }
+    }
+
+    public void Rotate(float amount)
+    {
+        transform.Rotate(new Vector3(0f, amount, 0f), Space.World);
     }
 }

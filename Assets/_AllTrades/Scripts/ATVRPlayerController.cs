@@ -154,7 +154,35 @@ public class ATVRPlayerController : MonoBehaviour
     public float boostDampPerFrame = 0.02f;
     public float maxBoostSpeed = 0.05f;
 
+    public Shader shaderGround;
+    public Shader shaderBlur;
+    public Material materialTerrain;
+
+    public bool EnableMultipliedAccel = false;
+    public float accelThreshold = 0.1f;
+    public float accelCap = 5f;
+    [HideInInspector]
+    public delegate void OnRotate(float rotation); // For outside scripts
+    [HideInInspector]
+    public OnRotate onRotate;
+
+    public bool EnableLeanMovement = false;
+    public float leanSpeed = 0.6f;
+    private bool boosting = false;
+    private OVRCameraRig ovrScript;
+
+    public Transform targetTransform;
+
     public bool EnableQuickBoost = true;
+    public float qbActivateThreshold = 0.1f;
+    public float qbDeactivateThreshold = 0.1f;
+    public int qbDetectionFrames = 4;
+    private int qbDetectionCount = 0;
+    public int qbDurationFrames = 90;
+    private int qbDurationCount = 0;
+
+    private Vector3 headAnchorLastPosition;
+    private bool isQuickBoosting = false;
     public bool vignetteOnQuickBoost = true;
     [HideInInspector]
     public delegate void OnQuickBoostStart(); // For outside scripts
@@ -168,14 +196,6 @@ public class ATVRPlayerController : MonoBehaviour
     public float quickBoostCooldown = 0.5f;
     public float quickBoostDuration = 0.3f;
     public float quickBoostSpeed = 1f;
-
-    public Shader shaderGround;
-    public Shader shaderBlur;
-    public Material materialTerrain;
-
-    public bool EnableMultipliedAccel = false;
-    public float accelMultiplier = 0.1f;
-    public float accelThreshold = 0.1f;
 
     protected CharacterController Controller = null;
     protected OVRCameraRig CameraRig = null;
@@ -205,7 +225,6 @@ public class ATVRPlayerController : MonoBehaviour
     private float leftBoostReleaseTime = 0f;
     private float rightBoostReleaseTime = 0f;
     private float lastQuickBoostTime = 0f;
-    private bool isQuickBoosting = false;
     private PostProcessVolume ppv;
     private Vignette vigLayer;
     private PreBoostVigConfig preBoostVigConfig;
@@ -474,6 +493,7 @@ public class ATVRPlayerController : MonoBehaviour
 
         if (EnableRotation)
         {
+            Vector3 anchorDiff = transform.position - accelAnchor;
             Vector3 euler = transform.rotation.eulerAngles;
             float rotateInfluence = SimulationRate * Time.deltaTime * RotationAmount * RotationScaleMultiplier;
 
@@ -508,6 +528,10 @@ public class ATVRPlayerController : MonoBehaviour
                     if (ReadyToSnapTurn)
                     {
                         euler.y -= RotationRatchet;
+                        if (onRotate != null)
+                            onRotate(-RotationRatchet);
+                        anchorDiff = Quaternion.Euler(0, -RotationRatchet, 0) * anchorDiff;
+                        accelAnchor = transform.position - anchorDiff;
                         ReadyToSnapTurn = false;
                     }
                 }
@@ -516,6 +540,10 @@ public class ATVRPlayerController : MonoBehaviour
                     if (ReadyToSnapTurn)
                     {
                         euler.y += RotationRatchet;
+                        if (onRotate != null)
+                            onRotate(RotationRatchet);
+                        anchorDiff = Quaternion.Euler(0, RotationRatchet, 0) * anchorDiff;
+                        accelAnchor = transform.position - anchorDiff;
                         ReadyToSnapTurn = false;
                     }
                 }
@@ -528,6 +556,8 @@ public class ATVRPlayerController : MonoBehaviour
             {
                 Vector2 secondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
                 euler.y += secondaryAxis.x * rotateInfluence;
+                if (onRotate != null)
+                    onRotate(secondaryAxis.x * rotateInfluence);
             }
 
             transform.rotation = Quaternion.Euler(euler);
@@ -673,7 +703,109 @@ public class ATVRPlayerController : MonoBehaviour
 
         }
 
-        if (EnableQuickBoost)
+        if (EnableMultipliedAccel)
+        {
+            prevFrameMove = new Vector3(MoveThrottle.x, MoveThrottle.y, MoveThrottle.z);
+            if (Input.GetAxis("Oculus_CrossPlatform_SecondaryHandTrigger") > 0.8f && Input.GetAxis("Oculus_CrossPlatform_PrimaryHandTrigger") > 0.8f)
+            {
+                MoveThrottle = new Vector3(headAnchor.position.x - accelAnchor.x, 0f, headAnchor.position.z - accelAnchor.z);
+                if (MoveThrottle.magnitude > accelThreshold)
+                {
+                    MoveThrottle *= 0.01666667f / Time.deltaTime;
+                    if (MoveThrottle.magnitude > accelCap)
+                    {
+                        MoveThrottle = MoveThrottle.normalized * accelCap;
+                    }
+                }
+                else
+                {
+                    float mag = prevFrameMove.magnitude - (0.01666667f / Time.deltaTime) * accelThreshold;
+                    mag = mag > 0f ? mag : 0f;
+                    MoveThrottle = prevFrameMove.normalized * mag;
+                }
+            }
+            else
+            {
+                MoveThrottle = Vector3.zero;
+            }
+            accelAnchor = headAnchor.position;
+        }
+
+        if (EnableLeanMovement)
+        {
+            if (Input.GetAxis("Oculus_CrossPlatform_SecondaryHandTrigger") > 0.8f && Input.GetAxis("Oculus_CrossPlatform_PrimaryHandTrigger") > 0.8f)
+            {
+                if (!boosting)
+                {
+                    OVRManager.display.RecenterPose();
+                    boosting = true;
+                }
+                else
+                {
+                    MoveThrottle = headAnchor.parent.rotation * new Vector3(headAnchor.localPosition.x, 0f, headAnchor.localPosition.z);
+                    if (!isQuickBoosting)
+                    {
+                        Debug.Log((MoveThrottle - headAnchorLastPosition).magnitude.ToString("F5"));
+                        if ((MoveThrottle - headAnchorLastPosition).magnitude > qbActivateThreshold)
+                        {
+                            qbDetectionCount++;
+                            if (qbDetectionCount >= qbDetectionFrames)
+                            {
+                                isQuickBoosting = true;
+                                qbDurationCount = 0;
+                                Debug.Log("Boosting detected" + Time.time);
+                            }
+                        }
+                        else
+                        {
+                            qbDetectionCount = 0;
+                        }
+                        headAnchorLastPosition = MoveThrottle;
+                    }
+
+                    if (!isQuickBoosting)
+                    {
+                        MoveThrottle *= leanSpeed;
+                        if (true/*MoveThrottle.magnitude > accelThreshold*/)
+                        {
+                            if (MoveThrottle.magnitude > (leanSpeed * 0.5f))
+                            {
+                                MoveThrottle = MoveThrottle.normalized * leanSpeed * 0.5f;
+                            }
+                        }
+                        else
+                        {
+                            // TODO: slow down
+                        }
+                    }
+                    else
+                    {
+                        qbDurationCount++;
+                        MoveThrottle -= headAnchorLastPosition;
+                        MoveThrottle *= leanSpeed * quickBoostSpeed;
+                        if (MoveThrottle.magnitude > (leanSpeed * quickBoostSpeed * 0.5f))
+                        {
+                            MoveThrottle = MoveThrottle.normalized * leanSpeed * quickBoostSpeed * 0.5f;
+                        }
+                        Debug.Log(MoveThrottle.magnitude);
+                        if (qbDurationCount > qbDurationFrames)
+                        {
+                            isQuickBoosting = false;
+                            Debug.Log("Boosting finished" + Time.time);
+                            qbDetectionCount = 0;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MoveThrottle = Vector3.zero;
+                boosting = false;
+            }
+            accelAnchor = headAnchor.position;
+        }
+
+        /*if (EnableQuickBoost)
         {
             if (Time.time > lastQuickBoostTime + quickBoostCooldown)
             {
@@ -741,38 +873,7 @@ public class ATVRPlayerController : MonoBehaviour
             {
                 rightBoostReleaseTime = Time.time;
             }
-        }
-
-        if (EnableMultipliedAccel)
-        {
-            prevFrameMove = new Vector3(MoveThrottle.x, MoveThrottle.y, MoveThrottle.z);
-            /*if (Input.GetButtonDown("Oculus_CrossPlatform_Button2") || Input.GetButtonDown("Oculus_CrossPlatform_Button4"))
-            {
-                // accelAnchor = headAnchor.position;
-            }
-            else if (Input.GetButton("Oculus_CrossPlatform_Button2") || Input.GetButton("Oculus_CrossPlatform_Button4"))
-            {*/
-                MoveThrottle = new Vector3(headAnchor.position.x - accelAnchor.x, 0f, headAnchor.position.z - accelAnchor.z);
-                if (MoveThrottle.magnitude > accelThreshold)
-                {
-                    MoveThrottle *= accelMultiplier;
-                    Debug.Log((headAnchor.position - transform.position).magnitude.ToString("F5"));
-                }
-                else
-                {
-                    float mag = prevFrameMove.magnitude - accelMultiplier * accelThreshold;
-                    mag = mag > 0f ? mag : 0f;
-                    MoveThrottle = prevFrameMove.normalized * mag;
-                }
-           /* }
-            else
-            {
-                float mag = prevFrameMove.magnitude - accelMultiplier;
-                mag = mag > 0f ? mag : 0f;
-                MoveThrottle = prevFrameMove.normalized * mag;
-            }*/
-            accelAnchor = headAnchor.position;
-        }
+        }*/
     }
 
 
