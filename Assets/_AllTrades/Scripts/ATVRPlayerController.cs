@@ -745,7 +745,7 @@ public class ATVRPlayerController : MonoBehaviour
                     MoveThrottle = headAnchor.parent.rotation * new Vector3(headAnchor.localPosition.x, 0f, headAnchor.localPosition.z);
                     if (!isQuickBoosting)
                     {
-                        Debug.Log((MoveThrottle - headAnchorLastPosition).magnitude.ToString("F5"));
+                        // Debug.Log((MoveThrottle - headAnchorLastPosition).magnitude.ToString("F5"));
                         if ((MoveThrottle - headAnchorLastPosition).magnitude > qbActivateThreshold)
                         {
                             qbDetectionCount++;
@@ -753,7 +753,6 @@ public class ATVRPlayerController : MonoBehaviour
                             {
                                 isQuickBoosting = true;
                                 qbDurationCount = 0;
-                                Debug.Log("Boosting detected" + Time.time);
                             }
                         }
                         else
@@ -787,11 +786,9 @@ public class ATVRPlayerController : MonoBehaviour
                         {
                             MoveThrottle = MoveThrottle.normalized * leanSpeed * quickBoostSpeed * 0.5f;
                         }
-                        Debug.Log(MoveThrottle.magnitude);
                         if (qbDurationCount > qbDurationFrames)
                         {
                             isQuickBoosting = false;
-                            Debug.Log("Boosting finished" + Time.time);
                             qbDetectionCount = 0;
                         }
                     }
