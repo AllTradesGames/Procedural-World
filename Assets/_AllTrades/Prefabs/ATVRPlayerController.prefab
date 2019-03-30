@@ -471,7 +471,6 @@ GameObject:
   - component: {fileID: 1538052001}
   - component: {fileID: 1538051997}
   - component: {fileID: 1538052000}
-  - component: {fileID: 1538052003}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -559,15 +558,6 @@ MonoBehaviour:
   fadeColor: {r: 0.01, g: 0.01, b: 0.01, a: 1}
   fadeOnStart: 1
   renderQueue: 5000
---- !u!45 &1538052003
-Skybox:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538051998}
-  m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: 97637a2a763b7f24b8da4e139e4144ca, type: 2}
 --- !u!1 &1543064327
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,19 +732,25 @@ MonoBehaviour:
   boostAddPerFrame: 0.001
   boostDampPerFrame: 0.02
   maxBoostSpeed: 0.05
+  shaderGround: {fileID: 0}
+  shaderBlur: {fileID: 0}
+  materialTerrain: {fileID: 0}
+  EnableMultipliedAccel: 0
+  accelThreshold: 0.1
+  accelCap: 5
+  EnableLeanMovement: 0
+  leanSpeed: 0.6
+  targetTransform: {fileID: 0}
   EnableQuickBoost: 1
+  qbActivateThreshold: 0.1
+  qbDeactivateThreshold: 0.1
+  qbDetectionFrames: 4
+  qbDurationFrames: 90
   vignetteOnQuickBoost: 1
   qbActivateWindow: 0.4
   quickBoostCooldown: 0.5
   quickBoostDuration: 0.3
   quickBoostSpeed: 1
-  shaderGround: {fileID: 0}
-  shaderBlur: {fileID: 0}
-  materialTerrain: {fileID: 0}
-  EnableMultipliedAccel: 0
-  accelMultiplier: 0.1
-  accelThreshold: 0.1
-  accelCap: 5
 --- !u!114 &1617729993
 MonoBehaviour:
   m_ObjectHideFlags: 0

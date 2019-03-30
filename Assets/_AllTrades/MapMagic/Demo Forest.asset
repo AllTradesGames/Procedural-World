@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bc43e142692db4e92eef81e1903ca4, type: 3}
-  m_Name: Forest
+  m_Name: Demo Forest
   m_EditorClassIdentifier: 
   oldId: 0
   oldCount: 0
-  guiScroll: {x: 677.91016, y: 481.6033}
-  guiZoom: 0.7634591
+  guiScroll: {x: -669.915, y: -174.71362}
+  guiZoom: 0.8239746
   serializedVersion: 193
   classes:
   - "<MapMagic.Generator[] length=80>\r\n\t<item0 type=MapMagic.Generator link=1/>\r\n\t<item1
@@ -1469,12 +1469,12 @@ MonoBehaviour:
   - {fileID: 4554390536330458, guid: e7323ec257e5c4b4e857b972745a410f, type: 3}
   - {fileID: 2800000, guid: 4f429ebc19d28b848b0f33e60b92402e, type: 3}
   - {fileID: 2800000, guid: 51d605edf94892f4d8c68b6d3ea5d860, type: 3}
-  - {fileID: 2800000, guid: cebf95bd26a72864cb65e6ae13268e06, type: 3}
-  - {fileID: 2800000, guid: 5d5f1fadf129f534ea4171d9d3d96340, type: 3}
+  - {fileID: 2800000, guid: 3af998a771fe24047a20a090e0d3e448, type: 3}
+  - {fileID: 2800000, guid: a574c3abe25d6fb449181b849d650c54, type: 3}
   - {fileID: 2800000, guid: 3bfc82ddb8272404aa836168b0ee9f26, type: 3}
   - {fileID: 2800000, guid: 12e2e3fa536f0bc4d9210f52a33e4c81, type: 3}
   floats: []
-  setDirty: 1
+  setDirty: 0
   serializer:
     entities: []
   listNum: 0
