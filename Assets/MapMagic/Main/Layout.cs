@@ -401,7 +401,7 @@ namespace MapMagic
 				{
 					elementStyle = new GUIStyle();
 					elementStyle.normal.background = GetIcon(textureName); //Resources.Load("MapMagic_Window") as Texture2D;
-					elementStyle.hover.background = GetIcon(textureName+"_pro");
+					elementStyle.hover.background = GetIcon(textureName);
 
 					elementStyles.CheckAdd(textureName, elementStyle);
 				}

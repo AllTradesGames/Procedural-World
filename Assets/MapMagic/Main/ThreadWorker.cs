@@ -303,7 +303,7 @@ namespace MapMagic
 
 						maxPriorityWorker.thread.Start();
 					}
-					else { maxPriorityWorker.ThreadFn(); if (IsMainThread) Profiler.EndSample(); if (oneThreadPerFrame) break; }
+					else { maxPriorityWorker.ThreadFn(); if (IsMainThread) UnityEngine.Profiling.Profiler.EndSample(); if (oneThreadPerFrame) break; }
 				}
 				finally { Monitor.Exit(maxPriorityWorker.locker); maxPriorityWorker.lockWasTaken=false; }
 			}
@@ -684,7 +684,7 @@ namespace MapMagic
 
 		public static void GetProgresByTag (string tag, out bool contained, out bool calculated, out bool ready)
 		{
-			if (profile) Profiler.BeginSample("Get Progress Tag");
+			if (profile) UnityEngine.Profiling.Profiler.BeginSample("Get Progress Tag");
 
 			int queueCount = queue.Count;
 
@@ -706,12 +706,12 @@ namespace MapMagic
 
 			if (!contained) { calculated=false; ready=false; }
 
-			if (profile) Profiler.EndSample();
+			if (profile) UnityEngine.Profiling.Profiler.EndSample();
 		}
 
 		public static void GetProgresByTag (string tag, out float contained, out float calculated, out float ready)
 		{
-			if (profile) Profiler.BeginSample("Get Progress Tag");
+			if (profile) UnityEngine.Profiling.Profiler.BeginSample("Get Progress Tag");
 
 			DictTuple<string, bool,bool> dict = new DictTuple<string, bool,bool>();
 
@@ -745,7 +745,7 @@ namespace MapMagic
 				if (tuple.item2) ready++;
 			}
 
-			if (profile) Profiler.EndSample();
+			if (profile) UnityEngine.Profiling.Profiler.EndSample();
 		}
 
 		public void OnGUI (Layout layout)

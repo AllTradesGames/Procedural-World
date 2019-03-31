@@ -767,9 +767,9 @@ public class ATVRPlayerController : MonoBehaviour
                         MoveThrottle *= leanSpeed;
                         if (true/*MoveThrottle.magnitude > accelThreshold*/)
                         {
-                            if (MoveThrottle.magnitude > (leanSpeed * 0.5f))
+                            if (MoveThrottle.magnitude > (leanSpeed * 0.4f))
                             {
-                                MoveThrottle = MoveThrottle.normalized * leanSpeed * 0.5f;
+                                MoveThrottle = MoveThrottle.normalized * leanSpeed * 0.4f;
                             }
                         }
                         else

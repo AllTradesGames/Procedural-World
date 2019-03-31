@@ -55,7 +55,13 @@ namespace MapMagic
 			
 			Transform tfm = null;
 			#if UNITY_EDITOR
+
+			#if UNITY_2018_3_OR_NEWER
+			if (!instantiateClones && !UnityEditor.EditorApplication.isPlaying && UnityEditor.PrefabUtility.GetPrefabAssetType(prefab)==UnityEditor.PrefabAssetType.Regular) tfm = (Transform)UnityEditor.PrefabUtility.InstantiatePrefab(prefab); //if not playing and prefab is prefab
+			#else
 			if (!instantiateClones && !UnityEditor.EditorApplication.isPlaying && UnityEditor.PrefabUtility.GetPrefabType(prefab)==UnityEditor.PrefabType.Prefab) tfm = (Transform)UnityEditor.PrefabUtility.InstantiatePrefab(prefab); //if not playing and prefab is prefab
+			#endif
+
 			else tfm = (Transform)GameObject.Instantiate(prefab);
 			#else
 			tfm = (Transform)GameObject.Instantiate(prefab);

@@ -13,6 +13,7 @@ namespace MapMagic
 		public enum Mode { Custom, RTP, MegaSplat, CTS };
 		public static Mode mode;
 		public static bool instantUpdateMaterial = false;
+		public static bool skipEmptyMaps = true;
 
 		//custom
 		static string[] controlTexturesNames = new string[] { "_ControlTex0" };
@@ -181,7 +182,7 @@ namespace MapMagic
 					if (biomeMaskObj == null) continue; //adding nothing if biome has no mask
 					biomeMask = (Matrix)biomeMaskObj;
 					if (biomeMask == null) continue;
-					if (biomeMask.IsEmpty()) continue; //optimizing empty biomes
+					if (skipEmptyMaps && biomeMask.IsEmpty()) continue; //optimizing empty biomes
 				}
 
 				for (int i=0; i<gen.baseLayers.Length; i++)
@@ -191,7 +192,7 @@ namespace MapMagic
 					if (stop!=null && stop(0)) return; //checking stop before reading output
 					if (!results.results.ContainsKey(output)) continue;
 					Matrix matrix = (Matrix)results.results[output];
-					if (matrix.IsEmpty()) continue;
+					if (skipEmptyMaps && matrix.IsEmpty()) continue;
 
 					for (int x=0; x<rect.size.x; x++)
 						for (int z=0; z<rect.size.z; z++)
@@ -495,13 +496,17 @@ namespace MapMagic
 				}
 
 				yield return null;
-			}	
+			}
 
 			//assigning mat copy
-			if (Preview.previewOutput == null && MapMagic.instance.customTerrainMaterial != null)
+			if (Preview.previewOutput == null && MapMagic.instance.customTerrainMaterial != (UnityEngine.Object)null)
 			{
-				//duplicating material
+				//destroy previous material
+				if (terrain.materialTemplate != null) GameObject.DestroyImmediate(terrain.materialTemplate); //removes custom shader textures as well. Unity does not remove them!
+				Resources.UnloadUnusedAssets();
 				terrain.materialTemplate = null; //need to reset material template to prevent unity crash
+
+				//duplicating material
 				terrain.materialTemplate = new Material(MapMagic.instance.customTerrainMaterial);
 				terrain.materialTemplate.name += " (Copy)";
 
@@ -707,14 +712,18 @@ namespace MapMagic
 				#endif
 			}
 
-			layout.margin += 3; layout.rightMargin += 3;
+			layout.Toggle(ref skipEmptyMaps, "Optimize Empty Maps");
+
+			//layout.margin += 3; layout.rightMargin += 3;
 
 			//material
+			layout.margin -= 10;
 			layout.Par(5); layout.Foldout(ref guiMaterial, "Material Template");
+			layout.margin += 10;
 			if (guiMaterial)
 			{
 				Rect anchor = layout.lastRect;
-				layout.margin += 5;
+				//layout.margin += 5;
 
 				layout.Field(ref MapMagic.instance.customTerrainMaterial);
 
@@ -729,27 +738,29 @@ namespace MapMagic
 						UpdateCustomShaderMaterials();
 				}
 
-				layout.margin -= 5;
+				//layout.margin -= 5;
 				layout.Foreground(anchor);
 			}
 
 
 			//texture
+			layout.margin -= 10;
 			layout.Par(5); layout.Foldout(ref guiTexture, "Control Texture");
+			layout.margin += 10;
 			if (guiTexture)
 			{
 				Rect anchor = layout.lastRect;
-				layout.margin += 5;
+				//layout.margin += 5;
 
 				layout.Toggle(ref formatARGB, "ARGB Format");
 				layout.Toggle(ref makeNoLongerReadable, "Non-readable");
 				layout.Toggle(ref smoothFallof, "Smooth Fallof", disabled:mode!=Mode.MegaSplat);
 
-				layout.margin -= 5;
+				//layout.margin -= 5;
 				layout.Foreground(anchor);
 			}
 
-			layout.margin += 3; layout.rightMargin += 3;
+			//layout.margin += 3; layout.rightMargin += 3;
 
 			//layers
 			layout.Par(5); 

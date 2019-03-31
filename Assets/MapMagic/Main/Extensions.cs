@@ -724,7 +724,15 @@ namespace MapMagic
 			if (s.Contains("=")) s = s.Remove(0, s.IndexOf('=')+1); //removing everything before =
 
 			object r = null;
-			if (t == typeof(float)) r = float.Parse(s);
+			if (t == typeof(float)) //r = float.Parse(s, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+			{
+				float f;
+				if (float.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out f)) r = f;
+				else if (float.TryParse(s, out f)) r = f;
+				else if (float.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.CurrentCulture.NumberFormat, out f)) r = f;
+				else 
+					throw new Exception("Could not parse float " + s);
+			}
 			else if (t == typeof(int)) r = int.Parse(s);
 			else if (t == typeof(bool)) r = bool.Parse(s);
 			else if (t == typeof(string)) r = s;

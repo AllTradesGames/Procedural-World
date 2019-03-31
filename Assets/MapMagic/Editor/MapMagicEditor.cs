@@ -184,7 +184,12 @@ namespace MapMagic
 
 								if (terrain.terrainData.alphamapLayers==1 && terrain.terrainData.alphamapTextures[0].width==2)
 								{
+									#if UNITY_2018_3_OR_NEWER
+									terrain.terrainData.terrainLayers = new TerrainLayer[0];
+									#else
 									terrain.terrainData.splatPrototypes = new SplatPrototype[0];
+									#endif
+
 									terrain.terrainData.SetAlphamaps(0,0,new float[0,0,0]);
 								}
      
@@ -400,6 +405,7 @@ namespace MapMagic
 				if (layout.lastChange) MapMagic.instance.ResetChunks();
 				layout.Field(ref MapMagic.instance.terrainHeight, "Terrain Height");
 				if (layout.lastChange) MapMagic.instance.ResetChunks();
+				layout.Toggle(ref MapMagic.instance.useTerrainPooling, "Use Terrain Pooling");
 
 				layout.Par(5);
 				layout.Field(ref MapMagic.instance.generateInfinite, "Generate Infinite Terrain");
@@ -521,6 +527,9 @@ namespace MapMagic
 				layout.Field(ref script.showBaseMap, "Show Base Map");
 				layout.Field(ref script.castShadows, "Cast Shadows");
 				layout.Field(ref script.applyColliders, "Apply Terrain Colliders");
+				#if UNITY_2018_3_OR_NEWER
+				layout.Field(ref script.drawInstanced, "Draw Instanced");
+				#endif
 
 				layout.Par(5);
 				layout.Field(ref script.terrainMaterialType, "Material Type");

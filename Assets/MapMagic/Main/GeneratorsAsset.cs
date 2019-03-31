@@ -600,7 +600,13 @@ namespace MapMagic
 				}*/
 
 				//creating initial texture if splatmap count is 0 - just to look good
+				
+
+				#if UNITY_2018_3_OR_NEWER
+				if (terrain.terrainData.terrainLayers.Length == 0) SplatOutput.Purge(rect,terrain);
+				#else
 				if (terrain.terrainData.splatPrototypes.Length == 0) SplatOutput.Purge(rect,terrain);
+				#endif
 
 				//clearing intermediate results
 				results.apply.Clear();

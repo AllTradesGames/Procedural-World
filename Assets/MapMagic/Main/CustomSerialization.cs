@@ -110,7 +110,8 @@ namespace MapMagic
 			references[slotNum] = obj;
 		
 			//writing
-			StringWriter writer = new StringWriter();
+			var numFormat = System.Globalization.CultureInfo.InvariantCulture.NumberFormat;
+			StringWriter writer = new StringWriter(numFormat);
 
 			//header
 			writer.Write("<" + objTypeName);
@@ -120,8 +121,14 @@ namespace MapMagic
 			//values
 			foreach (Value val in Values(obj))
 			{
+				if (val.type==typeof(float)) 
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " value=" + ((float)val.obj).ToString(numFormat) + "/>");
+
+				else if (val.type==typeof(double)) 
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " value=" + ((double)val.obj).ToString(numFormat) + "/>");
+
 				//primitive
-				if (val.type.IsPrimitive) 
+				else if (val.type.IsPrimitive) 
 					writer.WriteLine("\t<" + val.name + " type=" + val.type + " value=" + val.obj + "/>");
 
 				//null
@@ -206,7 +213,7 @@ namespace MapMagic
 				else if (val.type == typeof(Vector2))
 				{
 					Vector2 v2 = (Vector2)val.obj;
-					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + v2.x + " y=" + v2.y + "/>");
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + v2.x.ToString(numFormat) + " y=" + v2.y.ToString(numFormat) + "/>");
 					//writer.WriteLine("\t<" + val.name + " type=" + val.type + " val=" + floats.Count + "/>");
 					//floats.Add(v2.x); floats.Add(v2.y);
 				}
@@ -215,7 +222,7 @@ namespace MapMagic
 				else if (val.type == typeof(Vector3))
 				{
 					Vector3 v3 = (Vector3)val.obj;
-					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + v3.x + " y=" + v3.y + " z=" + v3.z + "/>");
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + v3.x.ToString(numFormat) + " y=" + v3.y.ToString(numFormat) + " z=" + v3.z.ToString(numFormat) + "/>");
 					//writer.WriteLine("\t<" + val.name + " type=" + val.type + " val=" + floats.Count + "/>");
 					//floats.Add(v3.x); floats.Add(v3.y); floats.Add(v3.z);
 				}
@@ -224,7 +231,7 @@ namespace MapMagic
 				else if (val.type == typeof(Rect))
 				{
 					Rect rect = (Rect)val.obj;
-					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + rect.x + " y=" + rect.y + " width=" + rect.width + " height=" + rect.height + "/>");
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + rect.x.ToString(numFormat) + " y=" + rect.y.ToString(numFormat) + " width=" + rect.width.ToString(numFormat) + " height=" + rect.height.ToString(numFormat) + "/>");
 					//writer.WriteLine("\t<" + val.name + " type=" + val.type + " val=" + floats.Count + "/>");
 					//floats.Add(rect.x); floats.Add(rect.y); floats.Add(rect.width); floats.Add(rect.height);
 				}
@@ -233,21 +240,21 @@ namespace MapMagic
 				else if (val.type == typeof(Color))
 				{
 					Color c = (Color)val.obj;
-					writer.WriteLine("\t<" + val.name + " type=" + val.type + " r=" + c.r + " g=" + c.g + " b=" + c.b + " a=" + c.a + "/>");
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " r=" + c.r.ToString(numFormat) + " g=" + c.g.ToString(numFormat) + " b=" + c.b.ToString(numFormat) + " a=" + c.a.ToString(numFormat) + "/>");
 				}
 
 				//Vector4
 				else if (val.type == typeof(Vector4))
 				{
 					Vector4 v4 = (Vector4)val.obj;
-					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + v4.x + " y=" + v4.y + " z=" + v4.z + " w=" + v4.w + "/>");
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + v4.x.ToString(numFormat) + " y=" + v4.y.ToString(numFormat) + " z=" + v4.z.ToString(numFormat) + " w=" + v4.w.ToString(numFormat) + "/>");
 				}
 
 				//Quaternion
 				else if (val.type == typeof(Quaternion))
 				{
 					Quaternion q = (Quaternion)val.obj;
-					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + q.x + " y=" + q.y + " z=" + q.z + " w=" + q.w + "/>");
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " x=" + q.x.ToString(numFormat) + " y=" + q.y.ToString(numFormat) + " z=" + q.z.ToString(numFormat) + " w=" + q.w.ToString(numFormat) + "/>");
 				}
 
 				//enum
@@ -257,8 +264,15 @@ namespace MapMagic
 				//keyframe
 				else if (val.type == typeof(Keyframe))
 				{
-					Keyframe k = (Keyframe)val.obj; 
-					writer.WriteLine("\t<" + val.name + " type=" + val.type + " time=" + k.time + " value=" + k.value + " in=" + k.inTangent + " out=" + k.outTangent + " mode=" + k.tangentMode + "/>");
+					Keyframe k = (Keyframe)val.obj;
+					#if UNITY_2018_2_OR_NEWER
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " time=" + k.time.ToString(numFormat) + " value=" + k.value.ToString(numFormat) + 
+						" in=" + k.inTangent.ToString(numFormat) + " out=" + k.outTangent.ToString(numFormat) + 
+						" mode=0" + //using free mode since tangent type is set by tangents themselves in 2018
+						" inWeight=" + k.inWeight.ToString(numFormat) + " outWeight=" + k.outWeight.ToString(numFormat) + "/>");
+					#else
+					writer.WriteLine("\t<" + val.name + " type=" + val.type + " time=" + k.time.ToString(numFormat) + " value=" + k.value.ToString(numFormat) + " in=" + k.inTangent.ToString(numFormat) + " out=" + k.outTangent.ToString(numFormat) + " mode=" + k.tangentMode + "/>");
+					#endif
 				}
 
 				//any other struct (same as class)
@@ -391,7 +405,9 @@ namespace MapMagic
 					//unity Object
 					else if (val.type.IsSubclassOf(typeof(UnityEngine.Object)))
 					{
-						val.obj = objects[ (int)lineMembers[2].Parse(typeof(int)) ];
+						UnityEngine.Object uobj = objects[ (int)lineMembers[2].Parse(typeof(int)) ];
+						if (uobj != (UnityEngine.Object)null) val.obj = uobj;
+						else val.obj = null;
 					}
 
 					//string
@@ -439,11 +455,31 @@ namespace MapMagic
 					else if (val.type == typeof(Quaternion))
 						val.obj = new Quaternion( (float)lineMembers[2].Parse(typeof(float)), (float)lineMembers[3].Parse(typeof(float)), (float)lineMembers[4].Parse(typeof(float)), (float)lineMembers[5].Parse(typeof(float)) );
 					
-					//Quaternion
+					//Keyframe
 					else if (val.type == typeof(Keyframe))
 					{
 						Keyframe k = new Keyframe( (float)lineMembers[2].Parse(typeof(float)), (float)lineMembers[3].Parse(typeof(float)), (float)lineMembers[4].Parse(typeof(float)), (float)lineMembers[5].Parse(typeof(float)) );
-						k.tangentMode = (int)lineMembers[6].Parse(typeof(int));
+
+						#if UNITY_2018_2_OR_NEWER
+						if (lineMembers.Length > 7)
+						{
+							k.inWeight = (float)lineMembers[7].Parse(typeof(float));
+							k.outWeight = (float)lineMembers[8].Parse(typeof(float));
+						}
+						else
+						{
+							if (lineMembers.Length >= 7)
+								k.tangentMode = (int)lineMembers[6].Parse(typeof(int));
+							else 
+								k.tangentMode = 0;
+						}
+						#else
+							if (lineMembers.Length >= 7)
+								k.tangentMode = (int)lineMembers[6].Parse(typeof(int));
+							else 
+								k.tangentMode = 0;
+						#endif
+
 						val.obj = k;
 					}
 				
@@ -489,6 +525,7 @@ namespace MapMagic
 
 			return obj;
 		}
+
 
 		public static object DeepCopy (object src)
 		{
@@ -588,5 +625,4 @@ namespace MapMagic
 			classes.Add(writer.ToString()); //writing down what's left in writer
 		}
 	}
-
 }

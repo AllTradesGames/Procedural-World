@@ -35,7 +35,7 @@ namespace MapMagic
 			{
 				foreach (Chunk chunk in MapMagic.instance.chunks.All()) 
 				{
-					if (chunk.terrain == null) continue; //if terrain was deleted
+					if (chunk.terrain == null) continue; //if terrain was deleted 
 
 					//chunk.terrain.materialType = MapMagic.instance.terrainMaterialType;
 					//chunk.terrain.materialTemplate = MapMagic.instance.customTerrainMaterial;
@@ -43,11 +43,24 @@ namespace MapMagic
 
 					//assigning saved material
 					if (originalMaterials.ContainsKey(chunk.terrain.transform))
+					{
+						if (chunk.terrain.materialTemplate != null) GameObject.DestroyImmediate(chunk.terrain.materialTemplate); //removes custom shader textures as well. Unity does not remove them!
+						Resources.UnloadUnusedAssets();
+
 						chunk.terrain.materialTemplate = originalMaterials[chunk.terrain.transform];
+					}
+					
+					//checking if material is null and switching to standard if so
+					if (chunk.terrain.materialType == Terrain.MaterialType.Custom && MapMagic.instance.assignCustomTerrainMaterial && chunk.terrain.materialTemplate==null)
+					{
+						chunk.terrain.materialType = Terrain.MaterialType.BuiltInStandard; 
+					}
 					
 					//rebuilding: bug #118
 					if (chunk.terrain.materialType==Terrain.MaterialType.Custom && !MapMagic.instance.assignCustomTerrainMaterial && chunk.terrain.materialTemplate==null) 
 						{ MapMagic.instance.ClearResults(); MapMagic.instance.Generate(force:true); } //rebuilding if terrain has no material saved 
+
+
 				}
 			}
 
@@ -158,7 +171,7 @@ namespace MapMagic
 				//finding object rect
 				Rect worldRect = new Rect(0,0,0,0);
 				if (renderer != null) worldRect = new Rect(renderer.bounds.min.x, renderer.bounds.min.z, renderer.bounds.size.x, renderer.bounds.size.z);
-				else if (terrain != null) worldRect = new Rect(terrain.transform.position.x, terrain.transform.position.z, terrain.terrainData.size.x, terrain.terrainData.size.z);
+				else if (terrain != null) worldRect = new Rect(terrain.transform.localPosition.x, terrain.transform.localPosition.z, terrain.terrainData.size.x, terrain.terrainData.size.z);
 				
 				CoordRect matrixRect = CoordRect.PickIntersectingCellsByPos(worldRect, pixelSize);
 
@@ -186,12 +199,12 @@ namespace MapMagic
 						}
 						else if (terrain != null)
 						{
-							terrain.materialType = Terrain.MaterialType.Custom;
 							if (terrain.materialTemplate==null || terrain.materialTemplate.shader != previewShader) 
 							{
-								if (!originalMaterials.ContainsKey(tfm)) originalMaterials.Add(tfm, terrain.materialTemplate );
+								if (terrain.materialType == Terrain.MaterialType.Custom && !originalMaterials.ContainsKey(tfm)) originalMaterials.Add(tfm, terrain.materialTemplate );
 								terrain.materialTemplate = new Material(previewShader); 
 							}
+							terrain.materialType = Terrain.MaterialType.Custom;
 							material = terrain.materialTemplate;
 						}
 
@@ -199,10 +212,10 @@ namespace MapMagic
 						material.name = tfm.name + " Preview";
 
 						//calculate parent MM object offset
-						Vector3 offset = tfm.parent.position / (worldRect.size.x/matrix.rect.size.x); // /pixelsize
+						//Vector3 offset = tfm.parent.position / (worldRect.size.x/matrix.rect.size.x); // /pixelsize
 
 						material.SetTexture("_Preview", texture);
-						material.SetVector("_Rect", new Vector4(matrix.rect.offset.x+offset.x, matrix.rect.offset.z+offset.z, matrix.rect.size.x, matrix.rect.size.z ) );
+						material.SetVector("_Rect", new Vector4(matrix.rect.offset.x, matrix.rect.offset.z, matrix.rect.size.x, matrix.rect.size.z ) );
 						material.SetFloat("_Scale", pixelSize);
 						
 						break; //interrupting when texture assigned (to center)

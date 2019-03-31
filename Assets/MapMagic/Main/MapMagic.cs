@@ -13,7 +13,7 @@ namespace MapMagic
 	[HelpURL("https://gitlab.com/denispahunov/mapmagic/wikis/home")]
 	public class MapMagic : MonoBehaviour, ISerializationCallbackReceiver, IMapMagic
 	{
-		public static readonly int version = 193; 
+		public static readonly int version = 197; 
 		public static Extensions.VersionState versionState = Extensions.VersionState.release;
 
 		//terrains and generators
@@ -29,6 +29,7 @@ namespace MapMagic
 		public int terrainHeight = 200;
 		public int resolution = 512;
 		public int lodResolution = 128;
+		public bool useTerrainPooling = true;
 
 		public static MapMagic instance = null;
 
@@ -62,6 +63,7 @@ namespace MapMagic
 		public bool copyLayersTags = true;
 		public bool copyComponents = false;
 		public bool applyColliders = true;
+		public bool drawInstanced = false;
 		
 		public bool genAroundMainCam = true;
 		public bool genAroundObjsTag = false;
@@ -231,7 +233,7 @@ public bool guiInstantUpdateEnabled = false;
 
 				//checking and deploying
 				bool chunksChange = chunks.CheckDeploy(deployRects);
-				if (chunksChange) chunks.Deploy(deployRects, removeRects, parent:this, allowMove:true);
+				if (chunksChange) chunks.Deploy(deployRects, removeRects, parent:this, allowMove:useTerrainPooling);
 			}
 
 			//updating chunks
@@ -312,11 +314,12 @@ public bool guiInstantUpdateEnabled = false;
 				if (force || instantGenerate) chunk.worker.Start();
 
 				//resetting chunk material for CSO
-				if (chunk.terrain != null) //it could be destroyed by undo
+				//should be done in apply to prevent pink flickering
+				/*if (chunk.terrain != null) //it could be destroyed by undo
 				{
 					if (chunk.terrain.materialTemplate != null) GameObject.DestroyImmediate(chunk.terrain.materialTemplate); //removes custom shader textures as well. Unity does not remove them!
 					Resources.UnloadUnusedAssets();
-				}
+				}*/
 			}
 		}
 

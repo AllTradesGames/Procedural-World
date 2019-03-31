@@ -261,6 +261,10 @@ namespace MapMagic
 				if (terrainCollider==null) terrainCollider = terrain.GetComponent<TerrainCollider>();
 				if (terrainCollider!=null) terrainCollider.enabled = MapMagic.instance.applyColliders;
 
+				#if UNITY_2018_3_OR_NEWER
+				terrain.drawInstanced = magic.drawInstanced;
+				#endif
+
 				//material
 				if (!Preview.enabled)
 				{
