@@ -80,7 +80,7 @@ MonoBehaviour:
   m_snowTesselationDepth: 0
   m_snowAOStrength: 1
   m_snowAverage: {x: 0.5972019, y: 0.5711249, z: 0.61720663, w: 0.17254902}
-  terrainLayerAssetRebuild: 1
+  terrainLayerAssetRebuild: 0
   m_albedoFormat: 12
   m_albedoAniso: 8
   m_albedoFilterMode: 1
