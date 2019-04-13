@@ -24,23 +24,23 @@ MonoBehaviour:
   m_showColorMapSettings: 0
   m_showOptimisationSettings: 1
   m_ctsDirectory: Assets\Procedural Worlds\CTS/
-  m_shaderType: 4
+  m_shaderType: 1
   m_currentRenderPipelineType: 1
-  m_globalUvMixPower: 3
-  m_globalUvMixStartDistance: 10
-  m_globalNormalPower: 0
+  m_globalUvMixPower: 2
+  m_globalUvMixStartDistance: 12
+  m_globalNormalPower: 1
   m_globalDetailNormalClosePower: 1.99
   m_globalDetailNormalCloseTiling: 5
-  m_globalDetailNormalFarPower: 0
-  m_globalDetailNormalFarTiling: 300
-  m_globalTerrainSmoothness: 0
-  m_globalTerrainSpecular: 0.095
+  m_globalDetailNormalFarPower: 2
+  m_globalDetailNormalFarTiling: 116
+  m_globalTerrainSmoothness: 1
+  m_globalTerrainSpecular: 1
   m_globalTesselationPower: 7
   m_globalTesselationMinDistance: 0
   m_globalTesselationMaxDistance: 50
   m_globalTesselationPhongStrength: 1
-  m_globalAOType: 1
-  m_globalAOPower: 0
+  m_globalAOType: 0
+  m_globalAOPower: 1
   m_globalBasemapDistance: 10
   m_globalStripTexturesAtRuntime: 1
   m_drawInstanced: 1
@@ -56,21 +56,21 @@ MonoBehaviour:
   m_geoMapFarPower: 0
   m_geoMapTilingFar: 100
   m_snowAmount: 0
-  m_snowMaxAngle: 40
-  m_snowMaxAngleHardness: 1
+  m_snowMaxAngle: 62.9
+  m_snowMaxAngleHardness: 10
   m_snowMinHeight: 0
   m_snowMinHeightBlending: 37.5
   m_snowNoisePower: 0.8
   m_snowNoiseTiling: 0.02
   m_snowNormalScale: 1
   m_snowDetailPower: 1
-  m_snowTilingClose: 6.9
+  m_snowTilingClose: 13
   m_snowTilingFar: 3
   m_snowBrightness: 1
   m_snowBlendNormal: 0.9
-  m_snowSmoothness: 1
+  m_snowSmoothness: 1.11
   m_snowTint: {r: 1, g: 1, b: 1, a: 1}
-  m_snowSpecular: 1
+  m_snowSpecular: 3
   m_snowHeightmapBlendClose: 1
   m_snowHeightmapBlendFar: 1
   m_snowHeightmapDepth: 8
@@ -108,9 +108,9 @@ MonoBehaviour:
   m_snowEmissionTexture: {fileID: 0}
   m_snowGlitterTexture: {fileID: 2800000, guid: 0dd347c4b5067a2428dea9a70c418d05,
     type: 3}
-  m_snowGlitterColorPower: 0.2
-  m_snowGlitterNoiseThreshold: 0.991
-  m_snowGlitterSpecularPower: 0.2
+  m_snowGlitterColorPower: 0.722
+  m_snowGlitterNoiseThreshold: 1
+  m_snowGlitterSpecularPower: 0.14
   m_snowGlitterSmoothness: 0.9
   m_snowGlitterRefreshSpeed: 4
   m_snowGlitterTiling: 2.5
@@ -121,11 +121,11 @@ MonoBehaviour:
     m_name: Grass_pe1jvwp0_Albedo
     m_detailPower: 1
     m_snowReductionPower: 0
-    m_geologicalPower: 1
-    m_triplanar: 1
-    m_tint: {r: 0.7028302, g: 1, b: 0.7103835, a: 1}
+    m_geologicalPower: 0
+    m_triplanar: 0
+    m_tint: {r: 0.7122642, g: 1, b: 0.7122642, a: 1}
     m_tintBrightness: 1
-    m_smoothness: 1
+    m_smoothness: 0
     m_albedoIdx: 0
     m_albedoTilingClose: 1
     m_albedoTilingFar: 10
@@ -134,7 +134,7 @@ MonoBehaviour:
     m_smoothnessTexture: {fileID: 0}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 0
-    m_normalStrength: 2
+    m_normalStrength: 1.92
     m_normalTexture: {fileID: 2800000, guid: 12e2e3fa536f0bc4d9210f52a33e4c81, type: 3}
     m_heightIdx: -1
     m_heightDepth: 8
@@ -143,8 +143,8 @@ MonoBehaviour:
     m_heightBlendFar: 1
     m_heightTesselationDepth: 0
     m_heightMin: 0
-    m_heightMax: 1
-    m_heightTexture: {fileID: 0}
+    m_heightMax: 0
+    m_heightTexture: {fileID: 2800000, guid: d379da3a9de8c3d439d0b2411045d0dd, type: 3}
     m_aoIdx: -1
     m_aoPower: 1
     m_aoTexture: {fileID: 0}
@@ -153,24 +153,24 @@ MonoBehaviour:
     m_emissionTexture: {fileID: 0}
   - m_isOpenInEditor: 1
     m_textureIdx: 1
-    m_name: Grass_pe1jvwp0_Albedo
+    m_name: Cliff_bright
     m_detailPower: 1
     m_snowReductionPower: 0
     m_geologicalPower: 1
-    m_triplanar: 0
-    m_tint: {r: 0.7019608, g: 1, b: 0.70980394, a: 1}
+    m_triplanar: 1
+    m_tint: {r: 1, g: 1, b: 1, a: 1}
     m_tintBrightness: 1
     m_smoothness: 1
     m_albedoIdx: 1
     m_albedoTilingClose: 1
-    m_albedoTilingFar: 10.94
-    m_albedoAverage: {x: 0.036889445, y: 0.056128494, z: 0.0074990317, w: 1}
-    m_albedoTexture: {fileID: 2800000, guid: 3bfc82ddb8272404aa836168b0ee9f26, type: 3}
+    m_albedoTilingFar: 20
+    m_albedoAverage: {x: 0.18782076, y: 0.1714411, z: 0.1620294, w: 0.003921569}
+    m_albedoTexture: {fileID: 2800000, guid: 418621e72fed41a47a8ee91391b8239d, type: 3}
     m_smoothnessTexture: {fileID: 0}
     m_roughnessTexture: {fileID: 0}
     m_normalIdx: 1
     m_normalStrength: 2
-    m_normalTexture: {fileID: 2800000, guid: 12e2e3fa536f0bc4d9210f52a33e4c81, type: 3}
+    m_normalTexture: {fileID: 2800000, guid: 925ff35fdb73e724e940a3a86582e420, type: 3}
     m_heightIdx: -1
     m_heightDepth: 8
     m_heightContrast: 1
