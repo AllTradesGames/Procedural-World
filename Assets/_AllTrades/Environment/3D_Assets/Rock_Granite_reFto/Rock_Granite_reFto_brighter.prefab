@@ -64,7 +64,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 0
+  m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -94,7 +94,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 80
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4272544688559764
 Transform:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 80
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4186504948091638
 Transform:
   m_ObjectHideFlags: 0
@@ -368,23 +368,15 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0.08515602, y: 0.018258788, z: 0.09193528}
   m_Size: 1.8401588
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.7687865
+  - screenRelativeHeight: 0.89725125
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 23719093655080804}
-  - screenRelativeHeight: 0.29686335
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 23004796425984850}
-  - screenRelativeHeight: 0.089311145
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 23297471426308916}
-  - screenRelativeHeight: 0.027066376
+  - screenRelativeHeight: 0.25462833
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 23783923500231236}
@@ -439,7 +431,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -453,7 +445,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 1.7945025
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
