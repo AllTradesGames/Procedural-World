@@ -21,7 +21,6 @@ limitations under the License.
 
 using System;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 /// <summary>
 /// Controls the player's movement in virtual reality.
@@ -225,8 +224,6 @@ public class ATVRPlayerController : MonoBehaviour
     private float leftBoostReleaseTime = 0f;
     private float rightBoostReleaseTime = 0f;
     private float lastQuickBoostTime = 0f;
-    private PostProcessVolume ppv;
-    private Vignette vigLayer;
     private PreBoostVigConfig preBoostVigConfig;
     private class PreBoostVigConfig
     {

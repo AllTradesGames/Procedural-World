@@ -13,8 +13,9 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2500
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses:
   - DistortionVectors
   - TransparentBackfaceDebugDisplay
@@ -40,6 +41,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BaseColorMapT2DA:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 9a14ddef463220b4ba0cf0bca5a4c5e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -373,6 +378,7 @@ Material:
     - _EnableSpecularOcclusion: 0
     - _EnableWind: 6
     - _EnergyConservingSpecularColor: 1
+    - _EnvironmentReflections: 1
     - _FlipbookMode: 0
     - _FullDetailNormalBlendThreshold: 1
     - _FullDetailNormalBlendWidth: 0.05
@@ -415,6 +421,7 @@ Material:
     - _PPDPrimitiveWidth: 1
     - _Parallax: 0.02
     - _PreRefractionPass: 0
+    - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RefractionMode: 0
     - _RefractionModel: 0
@@ -424,7 +431,7 @@ Material:
     - _Shininess: 1
     - _ShiverDirectionality: 0.5
     - _ShiverDrag: 0.2
-    - _Smoothness: 1
+    - _Smoothness: 0
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SmoothnessTextureChannel: 0
@@ -524,3 +531,16 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+--- !u!114 &2440189822434644317
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1

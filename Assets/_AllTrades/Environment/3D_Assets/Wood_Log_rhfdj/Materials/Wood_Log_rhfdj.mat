@@ -13,8 +13,9 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2050
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses:
   - DistortionVectors
   - TransparentDepthPrepass
@@ -38,6 +39,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BaseColorMapT2DA:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 2ea577bf59893664c99e86eda4cfec13, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -340,6 +345,7 @@ Material:
     - _EnableSpecularOcclusion: 0
     - _EnableWind: 0
     - _EnergyConservingSpecularColor: 1
+    - _EnvironmentReflections: 1
     - _FullDetailNormalBlendThreshold: 1
     - _FullDetailNormalBlendWidth: 0.05
     - _GlossMapScale: 1
@@ -376,6 +382,7 @@ Material:
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
     - _PreRefractionPass: 0
+    - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RefractionMode: 0
     - _RefractionModel: 0
@@ -383,7 +390,7 @@ Material:
     - _SSRefractionProjectionModel: 0
     - _ShiverDirectionality: 0.5
     - _ShiverDrag: 0.2
-    - _Smoothness: 1
+    - _Smoothness: 0
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SmoothnessTextureChannel: 0
@@ -462,7 +469,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BackfaceBaseColorScale: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 1}
+    - _BaseColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
     - _BaseColorRandomize: {r: 0, g: 0, b: 0, a: 0.05}
     - _Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
@@ -481,3 +488,16 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+--- !u!114 &204383673373552981
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
