@@ -8,15 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: branches
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 04b98568941e4a949a0f866d4a3042ea,
+    type: 3}
   m_ShaderKeywords: _ALPHATEST_ON _ENVIRONMENTREFLECTIONS_OFF _NORMALMAP _OCCLUSIONMAP
     _SPECULARHIGHLIGHTS_OFF _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2500
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - DistortionVectors
   - TransparentBackfaceDebugDisplay
@@ -303,6 +303,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _albedomap:
+        m_Texture: {fileID: 2800000, guid: b8ab8cd5ce74d1949bf12e8105338010, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _maskmap:
+        m_Texture: {fileID: 2800000, guid: 1ff4950948e5f024f9b3c31824ca3292, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normalmap:
+        m_Texture: {fileID: 2800000, guid: 5ac905a47e1e61c44998fd53b1aac8cc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AORemapMax: 1
     - _AORemapMin: 0
@@ -321,6 +333,7 @@ Material:
     - _BillboardShadowMode: 0
     - _Blend: 0
     - _BlendMode: 0
+    - _BranchStiffness: 0.8
     - _BumpScale: 1
     - _CoatCoverage: 1
     - _CoatIOR: 0.5
@@ -396,6 +409,7 @@ Material:
     - _Ior: 1
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
+    - _LeafStiffness: 0.5
     - _LinkDetailsWithBase: 1
     - _MaskMapEncoding: 1
     - _MaterialID: 5
@@ -463,6 +477,7 @@ Material:
     - _TreeDO2: 5
     - _TreeDOBias: 0
     - _TreeDOBias2: 0
+    - _TrunkStiffness: 0.8
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
@@ -495,6 +510,13 @@ Material:
     - _ZTestMode: 8
     - _ZTestModeDistortion: 8
     - _ZWrite: 1
+    - _alphaclip: 0.5
+    - _amapstrength: 1
+    - _metalValue: 0
+    - _smoothness: 0
+    - _strengthValue: 0
+    - _turbulenceValue: 0
+    - _usenormalmap: 1
     m_Colors:
     - _BackfaceBaseColorScale: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 0.8235294, g: 0.905071, b: 1, a: 1}
@@ -516,6 +538,10 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+    - _albedocolor: {r: 0.19464216, g: 0.509434, b: 0.20418486, a: 0}
+    - _directionValue: {r: 3, g: 3, b: 0, a: 0}
+    - _offset: {r: 0, g: 0, b: 0, a: 0}
+    - _tiling: {r: 1, g: 1, b: 0, a: 0}
 --- !u!114 &5617164838275787797
 MonoBehaviour:
   m_ObjectHideFlags: 11
