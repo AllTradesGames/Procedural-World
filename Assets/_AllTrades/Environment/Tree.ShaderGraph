@@ -1305,12 +1305,6 @@
             "typeInfo": {
                 "fullName": "UnityEditor.Graphing.Edge"
             },
-            "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 2,\n        \"m_NodeGUIDSerialized\": \"9634cbb6-1f3a-44f7-950a-c451565d0641\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 2,\n        \"m_NodeGUIDSerialized\": \"5422c896-4cd6-4d77-a946-67fca3c7e939\"\n    }\n}"
-        },
-        {
-            "typeInfo": {
-                "fullName": "UnityEditor.Graphing.Edge"
-            },
             "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 7,\n        \"m_NodeGUIDSerialized\": \"fac9e309-6e9b-4052-868d-91e3c91b8047\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 0,\n        \"m_NodeGUIDSerialized\": \"803b8a7b-032d-4b0d-9d8e-95646a6e57ee\"\n    }\n}"
         },
         {
@@ -1587,7 +1581,7 @@
     "m_PreviewData": {
         "serializedMesh": {
             "m_SerializedMesh": "",
-            "m_Guid": "0000000000000000e000000000000000"
+            "m_Guid": "d19ddd53506b7824e9a319a1d65385e1"
         }
     },
     "m_Path": "Demo/Vegetation"

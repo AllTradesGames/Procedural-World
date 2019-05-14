@@ -538,7 +538,7 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
-    - _albedocolor: {r: 0.19464216, g: 0.509434, b: 0.20418486, a: 0}
+    - _albedocolor: {r: 0.3228017, g: 0.8773585, b: 0.33666566, a: 0}
     - _directionValue: {r: 3, g: 3, b: 0, a: 0}
     - _offset: {r: 0, g: 0, b: 0, a: 0}
     - _tiling: {r: 1, g: 1, b: 0, a: 0}

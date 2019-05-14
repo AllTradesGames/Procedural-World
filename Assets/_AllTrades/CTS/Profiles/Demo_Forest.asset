@@ -26,7 +26,7 @@ MonoBehaviour:
   m_ctsDirectory: Assets\Procedural Worlds\CTS/
   m_shaderType: 1
   m_currentRenderPipelineType: 1
-  m_globalUvMixPower: 2
+  m_globalUvMixPower: 1
   m_globalUvMixStartDistance: 15
   m_globalNormalPower: 1
   m_globalDetailNormalClosePower: 1.99
@@ -39,7 +39,7 @@ MonoBehaviour:
   m_globalTesselationMinDistance: 0
   m_globalTesselationMaxDistance: 50
   m_globalTesselationPhongStrength: 1
-  m_globalAOType: 0
+  m_globalAOType: 1
   m_globalAOPower: 1
   m_globalBasemapDistance: 10
   m_globalStripTexturesAtRuntime: 1
@@ -123,12 +123,12 @@ MonoBehaviour:
     m_snowReductionPower: 0
     m_geologicalPower: 0
     m_triplanar: 0
-    m_tint: {r: 0.7122642, g: 1, b: 0.7122642, a: 1}
-    m_tintBrightness: 1
+    m_tint: {r: 1, g: 1, b: 1, a: 1}
+    m_tintBrightness: 0.81
     m_smoothness: 0
     m_albedoIdx: 0
     m_albedoTilingClose: 1
-    m_albedoTilingFar: 10
+    m_albedoTilingFar: 4.4
     m_albedoAverage: {x: 0.0409152, y: 0.05951124, z: 0.009134057, w: 0.03137255}
     m_albedoTexture: {fileID: 2800000, guid: 3bfc82ddb8272404aa836168b0ee9f26, type: 3}
     m_smoothnessTexture: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
     m_smoothness: 1
     m_albedoIdx: 1
     m_albedoTilingClose: 1
-    m_albedoTilingFar: 20
+    m_albedoTilingFar: 7.9
     m_albedoAverage: {x: 0.1714411, y: 0.17788841, z: 0.14702728, w: 0.003921569}
     m_albedoTexture: {fileID: 2800000, guid: 418621e72fed41a47a8ee91391b8239d, type: 3}
     m_smoothnessTexture: {fileID: 0}
@@ -230,8 +230,8 @@ MonoBehaviour:
     m_snowReductionPower: 0
     m_geologicalPower: 0
     m_triplanar: 0
-    m_tint: {r: 0.7137255, g: 1, b: 0.7137255, a: 1}
-    m_tintBrightness: 1.25
+    m_tint: {r: 1, g: 1, b: 1, a: 1}
+    m_tintBrightness: 0.47
     m_smoothness: 0
     m_albedoIdx: 3
     m_albedoTilingClose: 1

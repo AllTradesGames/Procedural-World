@@ -104,7 +104,7 @@ Material:
     - _smoothness: 0
     - _strengthValue: 0
     - _turbulenceValue: 30
-    - _usenormalmap: 0
+    - _usenormalmap: 1
     m_Colors:
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
