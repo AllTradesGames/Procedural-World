@@ -152,13 +152,13 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     directLightAngleOffset: 0
-    ambientMode: 0
+    ambientMode: 1
     ambientIntensity:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1.0001979
+        value: 2.5015054
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1.0001979
+        value: 2.5015054
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1053,13 +1053,13 @@ MonoBehaviour:
     temperatureChangingSpeed: 1
   fogSettings:
     Fogmode: 1
-    useSimpleFog: 1
-    distanceFog: 1
-    useRadialDistance: 1
+    useSimpleFog: 0
+    distanceFog: 0
+    useRadialDistance: 0
     startDistance: 0
-    distanceFogIntensity: 7.07
+    distanceFogIntensity: 0.04
     maximumFogDensity: 0.872
-    heightFog: 1
+    heightFog: 0
     height: 50
     heightFogIntensity: 1
     heightDensity: 0.99999994
@@ -1069,7 +1069,7 @@ MonoBehaviour:
     noiseVelocity: {x: 3, y: 1.5}
     mie: 0
     g: 5
-    dithering: 1
+    dithering: 0
     simpleFogColor:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
