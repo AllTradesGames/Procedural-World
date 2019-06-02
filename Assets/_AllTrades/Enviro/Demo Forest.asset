@@ -307,9 +307,9 @@ MonoBehaviour:
     noiseScale: 0.0254
     noiseVelocity: {x: 3, y: 1.5}
   distanceBlurSettings:
-    antiFlicker: 1
-    highQuality: 1
-    radius: 3
+    antiFlicker: 0
+    highQuality: 0
+    radius: 0
   skySettings:
     skyboxMode: 0
     skyboxModeLW: 0
@@ -1379,7 +1379,7 @@ MonoBehaviour:
   qualitySettings:
     GlobalParticleEmissionRates: 0.9
     UpdateInterval: 0.5
-  viewMode: 0
+  viewMode: 7
   viewModeLW: 0
   showPlayerSetup: 0
   showRenderingSetup: 1

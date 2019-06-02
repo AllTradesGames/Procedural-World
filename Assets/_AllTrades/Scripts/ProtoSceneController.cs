@@ -26,6 +26,7 @@ public class ProtoSceneController : MonoBehaviour
         if(skyboxMat != null)
         {
             Camera.main.GetComponent<Skybox>().material = skyboxMat;
+            RenderSettings.skybox = skyboxMat;
         }
     }
 

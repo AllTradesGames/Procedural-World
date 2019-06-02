@@ -14,7 +14,8 @@ public class DataPreloadControl : MonoBehaviour
 
     void Awake()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        OVRManager.tiledMultiResLevel = OVRManager.TiledMultiResLevel.LMSHigh;
+        /*GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
             playerData = player.GetComponent<ATVRPlayerData>();
 
@@ -64,7 +65,14 @@ public class DataPreloadControl : MonoBehaviour
                     }
                 });
             }
-        });
+        });*/
+    }
+
+    void Start()
+    {
+        // Just load next scene
+        Debug.Log("Loading next scene...");
+        StartCoroutine(LoadSceneAsync());
     }
 
     void CheckEntitlement(Message msg)

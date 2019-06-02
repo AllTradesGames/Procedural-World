@@ -14,11 +14,12 @@ public class FollowTransform : MonoBehaviour
 
     void Awake()
     {
+        target = GameObject.FindWithTag("Player").transform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor");
         if (target != null)
         {
             transform.position = target.position;
             transform.rotation = target.rotation;
-            ATVRPlayerController playerController = target.root.GetComponent<ATVRPlayerController>();
+            ATVRPlayerController playerController =  target.root.GetComponent<ATVRPlayerController>();
             if (playerController != null)
             {
                 playerController.onRotate += this.Rotate;

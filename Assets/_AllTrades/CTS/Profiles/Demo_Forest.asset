@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ctsMajorVersion: 2019
   m_ctsMinorVersion: 1
-  m_ctsPatchVersion: 1
+  m_ctsPatchVersion: 3
   m_useMaterialControlBlock: 0
   m_showGlobalSettings: 1
   m_showSnowSettings: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   m_showColorMapSettings: 0
   m_showOptimisationSettings: 1
   m_ctsDirectory: Assets\Procedural Worlds\CTS/
-  m_shaderType: 1
+  m_shaderType: 4
   m_currentRenderPipelineType: 1
   m_globalUvMixPower: 1
   m_globalUvMixStartDistance: 15
@@ -44,8 +44,9 @@ MonoBehaviour:
   m_globalBasemapDistance: 10
   m_globalStripTexturesAtRuntime: 1
   m_drawInstanced: 1
+  m_renderQueue: -1
   ignoreInstancedWarningPopUp: 0
-  m_terrainLayerPath: 
+  m_terrainLayerPath: Assets/_AllTrades/CTS/Profiles/Arrays/
   m_colorMapClosePower: 0
   m_colorMapFarPower: 0
   m_colorMapOpacity: 0
@@ -75,23 +76,23 @@ MonoBehaviour:
   m_snowHeightmapBlendFar: 1
   m_snowHeightmapDepth: 8
   m_snowHeightmapContrast: 1
-  m_snowHeightmapMinValue: 0.1882353
-  m_snowHeightmapMaxValue: 0.5019608
+  m_snowHeightmapMinValue: 0.18431373
+  m_snowHeightmapMaxValue: 0.49019608
   m_snowTesselationDepth: 0
   m_snowAOStrength: 1
-  m_snowAverage: {x: 0.61720663, y: 0.5711249, z: 0.61720663, w: 0.17254902}
-  terrainLayerAssetRebuild: 0
-  m_albedoFormat: 12
-  m_albedoAniso: 8
+  m_snowAverage: {x: 0.5972019, y: 0.5775805, z: 0.6307572, w: 0.18039216}
+  terrainLayerAssetRebuild: 1
+  m_albedoFormat: 51
+  m_albedoAniso: 1
   m_albedoFilterMode: 1
-  m_albedoTextureSize: 4
-  m_albedoTextureSizePx: 1024
+  m_albedoTextureSize: 2
+  m_albedoTextureSizePx: 256
   m_albedoCompress: 1
-  m_normalFormat: 12
-  m_normalAniso: 8
+  m_normalFormat: 51
+  m_normalAniso: 1
   m_normalFilterMode: 1
-  m_normalTextureSize: 4
-  m_normalTextureSizePx: 1024
+  m_normalTextureSize: 2
+  m_normalTextureSizePx: 256
   m_normalCompress: 1
   m_globalDetailNormalMapIdx: 5
   m_globalDetailNormalMap: {fileID: 2800000, guid: 34f66994040def1499e148b92d4f3b07,
@@ -129,7 +130,7 @@ MonoBehaviour:
     m_albedoIdx: 0
     m_albedoTilingClose: 1
     m_albedoTilingFar: 4.4
-    m_albedoAverage: {x: 0.0409152, y: 0.05951124, z: 0.009134057, w: 0.03137255}
+    m_albedoAverage: {x: 0.038204364, y: 0.056128494, z: 0.00699541, w: 0.03137255}
     m_albedoTexture: {fileID: 2800000, guid: 3bfc82ddb8272404aa836168b0ee9f26, type: 3}
     m_smoothnessTexture: {fileID: 0}
     m_roughnessTexture: {fileID: 2800000, guid: 0ec170d98f3983341b1b2a477d134355,
@@ -161,11 +162,11 @@ MonoBehaviour:
     m_triplanar: 1
     m_tint: {r: 1, g: 1, b: 1, a: 1}
     m_tintBrightness: 1
-    m_smoothness: 1
+    m_smoothness: 0
     m_albedoIdx: 1
     m_albedoTilingClose: 1
     m_albedoTilingFar: 7.9
-    m_albedoAverage: {x: 0.1714411, y: 0.17788841, z: 0.14702728, w: 0.003921569}
+    m_albedoAverage: {x: 0.18782076, y: 0.17788841, z: 0.1620294, w: 0.003921569}
     m_albedoTexture: {fileID: 2800000, guid: 418621e72fed41a47a8ee91391b8239d, type: 3}
     m_smoothnessTexture: {fileID: 0}
     m_roughnessTexture: {fileID: 0}
@@ -200,7 +201,7 @@ MonoBehaviour:
     m_albedoIdx: 2
     m_albedoTilingClose: 1
     m_albedoTilingFar: 10.85
-    m_albedoAverage: {x: 0.0409152, y: 0.029556833, z: 0.015208514, w: 0.1764706}
+    m_albedoAverage: {x: 0.0409152, y: 0.029556833, z: 0.012983031, w: 0.16862746}
     m_albedoTexture: {fileID: 2800000, guid: cebf95bd26a72864cb65e6ae13268e06, type: 3}
     m_smoothnessTexture: {fileID: 0}
     m_roughnessTexture: {fileID: 2800000, guid: 2c73719b7ebb6cf43a7dc6be57574d99,
@@ -231,12 +232,12 @@ MonoBehaviour:
     m_geologicalPower: 0
     m_triplanar: 0
     m_tint: {r: 1, g: 1, b: 1, a: 1}
-    m_tintBrightness: 0.47
+    m_tintBrightness: 1
     m_smoothness: 0
     m_albedoIdx: 3
     m_albedoTilingClose: 1
     m_albedoTilingFar: 3
-    m_albedoAverage: {x: 0.0409152, y: 0.05951124, z: 0.009134057, w: 0.03137255}
+    m_albedoAverage: {x: 0.038204364, y: 0.056128494, z: 0.00699541, w: 0.03137255}
     m_albedoTexture: {fileID: 2800000, guid: 3bfc82ddb8272404aa836168b0ee9f26, type: 3}
     m_smoothnessTexture: {fileID: 0}
     m_roughnessTexture: {fileID: 2800000, guid: 0ec170d98f3983341b1b2a477d134355,
@@ -268,7 +269,7 @@ MonoBehaviour:
     type: 2}
   m_needsNormalsArrayUpdate: 0
   cachedTerrainLayers:
-  - {fileID: 8574412962073106934, guid: f9734c7d16aac574193cc65e91daa209, type: 2}
-  - {fileID: 8574412962073106934, guid: 23f53937dd633574895288736890a44a, type: 2}
-  - {fileID: 8574412962073106934, guid: bd23e7017e6f7c5469ad60305e32d9d1, type: 2}
-  - {fileID: 8574412962073106934, guid: 1c4df093308da834bbe36cfd6f4e3fe2, type: 2}
+  - {fileID: 8574412962073106934, guid: c5c900d832fc9e34b8384a4a6e2a184f, type: 2}
+  - {fileID: 8574412962073106934, guid: 5183656c48267524b813861c6c6d5b93, type: 2}
+  - {fileID: 8574412962073106934, guid: c8ec9bd204542184395ca86ce04c6c4e, type: 2}
+  - {fileID: 8574412962073106934, guid: ab2c0321f1c1ac6409a711fe50906793, type: 2}

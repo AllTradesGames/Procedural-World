@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/_AllTrades/Scenes/Data Preload.unity
     guid: fd40c43bd78661c41ae6ab2b5e4d3088
   - enabled: 1
-    path: Assets/_AllTrades/Scenes/Archetype Origins/Demo.unity
-    guid: 3a98adf2ec2df284d97118e0a4e18725
+    path: Assets/_AllTrades/Scenes/Archetype Origins/Combat Space.unity
+    guid: 305cc79148d2a1641a5b857914509177
   m_configObjects: {}
